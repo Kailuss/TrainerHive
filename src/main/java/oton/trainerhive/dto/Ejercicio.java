@@ -42,4 +42,13 @@ public class Ejercicio {
     public void setDemoFoto(Byte DemoFoto) {
 	this.DemoFoto = DemoFoto;
     }
+
+    public Object getNombre() {
+	throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public String toString() {
+	return this.getDescripcio();  // Esto es lo que se mostrará en el ComboBox
+    }
 }

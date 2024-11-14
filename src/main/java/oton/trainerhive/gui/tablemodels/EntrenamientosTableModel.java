@@ -29,7 +29,7 @@ public class EntrenamientosTableModel extends AbstractTableModel {
 	    case 0 ->
 		"<html><b>" + entrenamiento.getComments() + "</b></html>";
 	    case 1 ->
-		entrenamiento.getForDate();
+		entrenamiento.getForDateFormatted();
 	    default ->
 		null;
 	};

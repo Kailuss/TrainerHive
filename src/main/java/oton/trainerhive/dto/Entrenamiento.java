@@ -27,17 +27,20 @@ public class Entrenamiento {
 	this.Id = Id;
     }
 
-    public String getForDate() {
+    public String getForDateFormatted() {
 	SimpleDateFormat sdfIn = new SimpleDateFormat("yyyy-MM-dd");
-	//SimpleDateFormat sdf2 = new SimpleDateFormat("dd-MM-yyyy");
 	SimpleDateFormat sdfOut = new SimpleDateFormat("EEEE',' dd MMM yyyy", new Locale("es", "ES"));
-        
+
 	try {
 	    d = sdfIn.parse(this.ForDate);
 	} catch (ParseException ex) {
 	    Logger.getLogger(Entrenamiento.class.getName()).log(Level.SEVERE, null, ex);
 	}
 	return sdfOut.format(d);
+    }
+    
+    public String getForDate() {
+	return ForDate;
     }
 
     public void setForDate(String ForDate) {
