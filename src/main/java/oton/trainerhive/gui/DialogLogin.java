@@ -1,5 +1,7 @@
 package oton.trainerhive.gui;
 
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import oton.trainerhive.dataaccess.DataAccess;
@@ -24,7 +26,7 @@ public class DialogLogin extends javax.swing.JDialog {
 
     // Configuración inicial de la interfaz
     private void setupUI() {
-	getRootPane().setDefaultButton(buttonTryLogin);	// Botón predeterminado al presionar Enter
+	getRootPane().setDefaultButton(loginButton);	// Botón predeterminado al presionar Enter
 	setLocationRelativeTo(principal);		// Centra el diálogo respecto al Frame principal
 
 	// Listener para seleccionar todo el texto del campo de contraseña al obtener el foco
@@ -32,6 +34,37 @@ public class DialogLogin extends javax.swing.JDialog {
 	    @Override
 	    public void focusGained(java.awt.event.FocusEvent evt) {
 		passwordField.selectAll();
+	    }
+	});
+
+	// Listener para mostrar u ocultar la contraseña
+	showPasswordCheckBox.addItemListener(new ItemListener() {
+	    @Override
+	    public void itemStateChanged(ItemEvent e) {
+		if (e.getStateChange() == ItemEvent.SELECTED) {
+		    passwordField.setEchoChar((char) 0);    // Muestra contraseña
+		} else {
+		    passwordField.setEchoChar('•');	    // Oculta contraseña
+		}
+	    }
+	});
+
+	 // Simula un clic en el botón 'Iniciar sesión' al pulsar la tecla Intro
+	userField.addKeyListener(new java.awt.event.KeyAdapter() {
+	    @Override
+	    public void keyPressed(java.awt.event.KeyEvent evt) {
+		if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+		    loginButton.doClick();
+		}
+	    }
+	});
+
+	passwordField.addKeyListener(new java.awt.event.KeyAdapter() {
+	    @Override
+	    public void keyPressed(java.awt.event.KeyEvent evt) {
+		if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+		    loginButton.doClick();
+		}
 	    }
 	});
     }
@@ -49,12 +82,12 @@ public class DialogLogin extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        labelLogo64 = new javax.swing.JLabel();
-        textFieldUserMail = new javax.swing.JTextField();
+        logoLabel = new javax.swing.JLabel();
+        userField = new javax.swing.JTextField();
         passwordField = new javax.swing.JPasswordField();
-        buttonTryLogin = new javax.swing.JButton();
-        labelLoginError = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        loginButton = new javax.swing.JButton();
+        loginErrorLabel = new javax.swing.JLabel();
+        showPasswordCheckBox = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Inicio de sesión");
@@ -63,28 +96,30 @@ public class DialogLogin extends javax.swing.JDialog {
         setResizable(false);
         setSize(new java.awt.Dimension(300, 360));
 
-        labelLogo64.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelLogo64.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/TrainerHiveLogo64.png"))); // NOI18N
-        labelLogo64.setAlignmentX(0.5F);
-        labelLogo64.setFocusable(false);
-        labelLogo64.setMaximumSize(new java.awt.Dimension(300, 64));
-        labelLogo64.setMinimumSize(new java.awt.Dimension(300, 64));
-        labelLogo64.setPreferredSize(new java.awt.Dimension(300, 64));
+        logoLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        logoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/TrainerHiveLogo64.png"))); // NOI18N
+        logoLabel.setAlignmentX(0.5F);
+        logoLabel.setFocusable(false);
+        logoLabel.setMaximumSize(new java.awt.Dimension(300, 64));
+        logoLabel.setMinimumSize(new java.awt.Dimension(300, 64));
+        logoLabel.setPreferredSize(new java.awt.Dimension(300, 64));
 
-        textFieldUserMail.setText("Email");
-        textFieldUserMail.setMaximumSize(new java.awt.Dimension(200, 36));
-        textFieldUserMail.setMinimumSize(new java.awt.Dimension(200, 36));
-        textFieldUserMail.setPreferredSize(new java.awt.Dimension(200, 36));
-        textFieldUserMail.addActionListener(new java.awt.event.ActionListener() {
+        userField.setText("a@b.c");
+        userField.setMaximumSize(new java.awt.Dimension(200, 36));
+        userField.setMinimumSize(new java.awt.Dimension(200, 36));
+        userField.setNextFocusableComponent(passwordField);
+        userField.setPreferredSize(new java.awt.Dimension(200, 36));
+        userField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textFieldUserMailActionPerformed(evt);
+                userFieldActionPerformed(evt);
             }
         });
 
-        passwordField.setText("contrasegna");
+        passwordField.setText("string");
         passwordField.setAutoscrolls(false);
         passwordField.setMaximumSize(new java.awt.Dimension(200, 36));
         passwordField.setMinimumSize(new java.awt.Dimension(200, 36));
+        passwordField.setNextFocusableComponent(showPasswordCheckBox);
         passwordField.setPreferredSize(new java.awt.Dimension(200, 36));
         passwordField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -92,32 +127,34 @@ public class DialogLogin extends javax.swing.JDialog {
             }
         });
 
-        buttonTryLogin.setBackground(new java.awt.Color(99, 101, 105));
-        buttonTryLogin.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
-        buttonTryLogin.setForeground(new java.awt.Color(255, 204, 51));
-        buttonTryLogin.setText("Iniciar sesión");
-        buttonTryLogin.setFocusPainted(false);
-        buttonTryLogin.setMaximumSize(new java.awt.Dimension(200, 36));
-        buttonTryLogin.setMinimumSize(new java.awt.Dimension(200, 36));
-        buttonTryLogin.setPreferredSize(new java.awt.Dimension(200, 36));
-        buttonTryLogin.addActionListener(new java.awt.event.ActionListener() {
+        loginButton.setBackground(new java.awt.Color(99, 101, 105));
+        loginButton.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        loginButton.setForeground(new java.awt.Color(255, 204, 51));
+        loginButton.setText("Iniciar sesión");
+        loginButton.setToolTipText("");
+        loginButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        loginButton.setMaximumSize(new java.awt.Dimension(200, 36));
+        loginButton.setMinimumSize(new java.awt.Dimension(200, 36));
+        loginButton.setNextFocusableComponent(userField);
+        loginButton.setPreferredSize(new java.awt.Dimension(200, 36));
+        loginButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonTryLoginActionPerformed(evt);
+                loginButtonActionPerformed(evt);
             }
         });
 
-        labelLoginError.setForeground(new java.awt.Color(255, 204, 51));
-        labelLoginError.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelLoginError.setMaximumSize(new java.awt.Dimension(200, 16));
-        labelLoginError.setMinimumSize(new java.awt.Dimension(200, 16));
-        labelLoginError.setPreferredSize(new java.awt.Dimension(200, 16));
+        loginErrorLabel.setForeground(new java.awt.Color(255, 204, 51));
+        loginErrorLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        loginErrorLabel.setMaximumSize(new java.awt.Dimension(200, 16));
+        loginErrorLabel.setMinimumSize(new java.awt.Dimension(200, 16));
+        loginErrorLabel.setPreferredSize(new java.awt.Dimension(200, 16));
 
-        jCheckBox1.setText("Recuérdame");
-        jCheckBox1.setEnabled(false);
-        jCheckBox1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+        showPasswordCheckBox.setText("Mostrar contraseña");
+        showPasswordCheckBox.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        showPasswordCheckBox.setNextFocusableComponent(loginButton);
+        showPasswordCheckBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
+                showPasswordCheckBoxActionPerformed(evt);
             }
         });
 
@@ -128,31 +165,34 @@ public class DialogLogin extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jCheckBox1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(labelLogo64, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(showPasswordCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(logoLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(passwordField, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
-                    .addComponent(buttonTryLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(textFieldUserMail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(labelLoginError, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(loginButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(userField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(loginErrorLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(35, 35, 35))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addComponent(labelLogo64, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(logoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
-                .addComponent(textFieldUserMail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(userField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16)
                 .addComponent(passwordField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jCheckBox1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                .addComponent(labelLoginError, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(showPasswordCheckBox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addComponent(loginErrorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(buttonTryLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29))
         );
+
+        userField.getAccessibleContext().setAccessibleDescription("");
+        loginButton.getAccessibleContext().setAccessibleDescription("Botón para iniciar sesión");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -160,17 +200,17 @@ public class DialogLogin extends javax.swing.JDialog {
     private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
     }//GEN-LAST:event_passwordFieldActionPerformed
 
-    private void buttonTryLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTryLoginActionPerformed
-	String userMail = textFieldUserMail.getText();
+    private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
+	String userMail = userField.getText();
 	String password = new String(passwordField.getPassword());
-	labelLoginError.setText(""); // Limpia el mensaje de error
+	loginErrorLabel.setText(""); // Limpia el mensaje de error
 
-	// Intenta el inicio de sesión
+	// Intenta iniciar sesión
 	try {
 	    ArrayList<Usuario> instructors = DataAccess.getInstructor(userMail);
 
 	    if (instructors.isEmpty()) {
-		labelLoginError.setText("El usuario no existe.");
+		loginErrorLabel.setText("El usuario no existe.");
 		return;
 	    }
 
@@ -179,26 +219,26 @@ public class DialogLogin extends javax.swing.JDialog {
 	    if (DataAccess.decryptPassword(password, user.getPasswordHash())) {
 		successfulLogin(user);
 	    } else {
-		labelLoginError.setText("La contraseña es incorrecta.");
+		loginErrorLabel.setText("La contraseña es incorrecta.");
 	    }
 	} catch (SQLException e) {
-	    labelLoginError.setText("Error de conexión.");
+	    loginErrorLabel.setText("Error de conexión.");
 	}
-    }//GEN-LAST:event_buttonTryLoginActionPerformed
+    }//GEN-LAST:event_loginButtonActionPerformed
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
+    private void showPasswordCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showPasswordCheckBoxActionPerformed
+    }//GEN-LAST:event_showPasswordCheckBoxActionPerformed
 
-    private void textFieldUserMailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldUserMailActionPerformed
-    }//GEN-LAST:event_textFieldUserMailActionPerformed
+    private void userFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userFieldActionPerformed
+    }//GEN-LAST:event_userFieldActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton buttonTryLogin;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JLabel labelLoginError;
-    private javax.swing.JLabel labelLogo64;
+    private javax.swing.JButton loginButton;
+    private javax.swing.JLabel loginErrorLabel;
+    private javax.swing.JLabel logoLabel;
     private javax.swing.JPasswordField passwordField;
-    private javax.swing.JTextField textFieldUserMail;
+    private javax.swing.JCheckBox showPasswordCheckBox;
+    private javax.swing.JTextField userField;
     // End of variables declaration//GEN-END:variables
 }
