@@ -172,6 +172,7 @@ public class PanelTables extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         scrollPaneAlumnos = new javax.swing.JScrollPane();
         tableAlumnos = new javax.swing.JTable();
         toolBarUsers = new javax.swing.JToolBar();
@@ -188,7 +189,7 @@ public class PanelTables extends javax.swing.JPanel {
         scrollPaneEjercicios = new javax.swing.JScrollPane();
         tableEjercicios = new javax.swing.JTable();
         toolBarEntrenamientos = new javax.swing.JToolBar();
-        filler7 = new javax.swing.Box.Filler(new java.awt.Dimension(95, 0), new java.awt.Dimension(95, 0), new java.awt.Dimension(95, 10));
+        filler7 = new javax.swing.Box.Filler(new java.awt.Dimension(16, 0), new java.awt.Dimension(16, 0), new java.awt.Dimension(16, 30));
         buttonNewTask = new javax.swing.JButton();
         buttonEditTask = new javax.swing.JButton();
         buttonRemoveTask = new javax.swing.JButton();
@@ -201,7 +202,10 @@ public class PanelTables extends javax.swing.JPanel {
 
         setLayout(new java.awt.BorderLayout());
 
+        jPanel1.setLayout(new java.awt.BorderLayout());
+
         scrollPaneAlumnos.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPaneAlumnos.setAutoscrolls(true);
         scrollPaneAlumnos.setPreferredSize(new java.awt.Dimension(240, 402));
 
         tableAlumnos.setModel(new javax.swing.table.DefaultTableModel(
@@ -228,7 +232,7 @@ public class PanelTables extends javax.swing.JPanel {
             }
         });
         tableAlumnos.setFillsViewportHeight(true);
-        tableAlumnos.setPreferredSize(new java.awt.Dimension(240, 511));
+        tableAlumnos.setNextFocusableComponent(tableEntrenamientos);
         tableAlumnos.setRowHeight(48);
         tableAlumnos.setSelectionBackground(new java.awt.Color(251, 232, 96));
         tableAlumnos.setSelectionForeground(new java.awt.Color(38, 40, 41));
@@ -243,7 +247,9 @@ public class PanelTables extends javax.swing.JPanel {
             tableAlumnos.getColumnModel().getColumn(0).setPreferredWidth(239);
         }
 
-        add(scrollPaneAlumnos, java.awt.BorderLayout.WEST);
+        jPanel1.add(scrollPaneAlumnos, java.awt.BorderLayout.WEST);
+
+        add(jPanel1, java.awt.BorderLayout.LINE_START);
 
         toolBarUsers.setBackground(new java.awt.Color(99, 101, 105));
         toolBarUsers.setRollover(true);
@@ -323,7 +329,6 @@ public class PanelTables extends javax.swing.JPanel {
         tableEntrenamientos.setFocusable(false);
         tableEntrenamientos.setMaximumSize(new java.awt.Dimension(480, 192));
         tableEntrenamientos.setMinimumSize(new java.awt.Dimension(480, 192));
-        tableEntrenamientos.setPreferredSize(new java.awt.Dimension(480, 447));
         tableEntrenamientos.setRequestFocusEnabled(false);
         tableEntrenamientos.setRowHeight(48);
         tableEntrenamientos.setSelectionBackground(new java.awt.Color(251, 232, 96));
@@ -375,7 +380,6 @@ public class PanelTables extends javax.swing.JPanel {
         tableEjercicios.setEnabled(false);
         tableEjercicios.setFillsViewportHeight(true);
         tableEjercicios.setFocusable(false);
-        tableEjercicios.setPreferredSize(new java.awt.Dimension(240, 447));
         tableEjercicios.setRequestFocusEnabled(false);
         tableEjercicios.setRowHeight(48);
         tableEjercicios.setSelectionBackground(new java.awt.Color(251, 232, 96));
@@ -517,6 +521,7 @@ public class PanelTables extends javax.swing.JPanel {
     private javax.swing.Box.Filler filler5;
     private javax.swing.Box.Filler filler6;
     private javax.swing.Box.Filler filler7;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel labelActiveUser;
     private javax.swing.JLabel labelUsersCount;
     private javax.swing.JPanel panelEntramientos;

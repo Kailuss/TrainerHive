@@ -23,19 +23,14 @@ public class PanelLogIn extends javax.swing.JPanel {
         buttonWebsite = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(960, 597));
-        setLayout(null);
 
         labelLogoImg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelLogoImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logoTHanimado.gif"))); // NOI18N
         labelLogoImg.setAlignmentX(0.5F);
-        add(labelLogoImg);
-        labelLogoImg.setBounds(352, 106, 256, 119);
 
         labelLogo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logoTHtitle.png"))); // NOI18N
         labelLogo.setAlignmentX(0.5F);
-        add(labelLogo);
-        labelLogo.setBounds(352, 231, 256, 64);
 
         buttonLogin.setBackground(new java.awt.Color(99, 101, 105));
         buttonLogin.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -52,8 +47,6 @@ public class PanelLogIn extends javax.swing.JPanel {
                 buttonLoginActionPerformed(evt);
             }
         });
-        add(buttonLogin);
-        buttonLogin.setBounds(405, 346, 150, 48);
 
         buttonWebsite.setBackground(new java.awt.Color(60, 63, 65));
         buttonWebsite.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
@@ -68,8 +61,33 @@ public class PanelLogIn extends javax.swing.JPanel {
                 buttonWebsiteActionPerformed(evt);
             }
         });
-        add(buttonWebsite);
-        buttonWebsite.setBounds(405, 504, 150, 21);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(319, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(labelLogoImg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labelLogo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(buttonLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(buttonWebsite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(319, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(144, Short.MAX_VALUE)
+                .addComponent(labelLogoImg)
+                .addGap(0, 0, 0)
+                .addComponent(labelLogo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
+                .addComponent(buttonLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(56, 56, 56)
+                .addComponent(buttonWebsite)
+                .addGap(64, 64, 64))
+        );
     }// </editor-fold>//GEN-END:initComponents
 
     // Abre el diálogo de LogIn

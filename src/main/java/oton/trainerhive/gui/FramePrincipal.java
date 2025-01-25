@@ -44,10 +44,10 @@ public final class FramePrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setFocusable(false);
-        setMinimumSize(new java.awt.Dimension(960, 600));
-        setName("frameMain"); // NOI18N
-        setResizable(false);
-        setSize(new java.awt.Dimension(960, 600));
+        setMinimumSize(new java.awt.Dimension(1280, 900));
+        setName("mainFrame"); // NOI18N
+        setPreferredSize(new java.awt.Dimension(1280, 900));
+        setSize(new java.awt.Dimension(1024, 900));
 
         menuBarMain.setBorder(null);
         menuBarMain.setBorderPainted(false);
