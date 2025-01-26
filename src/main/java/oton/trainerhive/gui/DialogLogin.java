@@ -88,6 +88,7 @@ public class DialogLogin extends javax.swing.JDialog {
         loginButton = new javax.swing.JButton();
         loginErrorLabel = new javax.swing.JLabel();
         showPasswordCheckBox = new javax.swing.JCheckBox();
+        resetPasswordLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Inicio de sesión");
@@ -158,6 +159,13 @@ public class DialogLogin extends javax.swing.JDialog {
             }
         });
 
+        resetPasswordLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        resetPasswordLabel.setText("He olvidado mi contraseña");
+        resetPasswordLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        resetPasswordLabel.setMaximumSize(new java.awt.Dimension(200, 16));
+        resetPasswordLabel.setMinimumSize(new java.awt.Dimension(200, 16));
+        resetPasswordLabel.setPreferredSize(new java.awt.Dimension(200, 16));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -170,7 +178,8 @@ public class DialogLogin extends javax.swing.JDialog {
                     .addComponent(passwordField, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
                     .addComponent(loginButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(userField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(loginErrorLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(loginErrorLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(resetPasswordLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(35, 35, 35))
         );
         layout.setVerticalGroup(
@@ -184,11 +193,13 @@ public class DialogLogin extends javax.swing.JDialog {
                 .addComponent(passwordField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(showPasswordCheckBox)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addComponent(loginErrorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(resetPasswordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22))
         );
 
         userField.getAccessibleContext().setAccessibleDescription("");
@@ -238,6 +249,7 @@ public class DialogLogin extends javax.swing.JDialog {
     private javax.swing.JLabel loginErrorLabel;
     private javax.swing.JLabel logoLabel;
     private javax.swing.JPasswordField passwordField;
+    private javax.swing.JLabel resetPasswordLabel;
     private javax.swing.JCheckBox showPasswordCheckBox;
     private javax.swing.JTextField userField;
     // End of variables declaration//GEN-END:variables
