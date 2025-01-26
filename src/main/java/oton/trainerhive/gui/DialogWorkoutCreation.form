@@ -406,7 +406,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="labelExerciseName1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Fecha (dd/mm/aa)"/>
+        <Property name="text" type="java.lang.String" value="Fecha (dd/mm/aaaa)"/>
         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[175, 16]"/>
         </Property>

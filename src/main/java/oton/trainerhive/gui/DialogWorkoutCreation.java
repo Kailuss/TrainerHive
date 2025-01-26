@@ -409,7 +409,7 @@ public final class DialogWorkoutCreation extends javax.swing.JDialog {
             }
         });
 
-        labelExerciseName1.setText("Fecha (dd/mm/aa)");
+        labelExerciseName1.setText("Fecha (dd/mm/aaaa)");
         labelExerciseName1.setMaximumSize(new java.awt.Dimension(175, 16));
         labelExerciseName1.setMinimumSize(new java.awt.Dimension(175, 16));
         labelExerciseName1.setPreferredSize(new java.awt.Dimension(175, 16));
