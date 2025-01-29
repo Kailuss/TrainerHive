@@ -24,13 +24,13 @@ import oton.trainerhive.gui.util.UserAvatarGenerator;
 public class DataAccess {
 
     private static final String PROPERTIES_FILE = "src/main/resources/properties/application.properties";
-    private static Properties properties = new Properties();
+    private static final Properties properties = new Properties();
 
     static {
 	try (FileInputStream input = new FileInputStream(PROPERTIES_FILE)) {
 	    properties.load(input);
 	} catch (IOException e) {
-	    e.printStackTrace();
+	     throw new RuntimeException("Error al cargar el archivo de propiedades", e);
 	}
     }
 
@@ -58,6 +58,7 @@ public class DataAccess {
     /**
      *
      * @return @throws SQLException
+     * @throws java.sql.SQLException
      */
     public static ArrayList<User> getUsuaris() throws SQLException {
 	ArrayList<User> usuaris = new ArrayList<>();
@@ -129,7 +130,7 @@ public class DataAccess {
 		UserAvatarGenerator.createUserAvatar(user, 40, true);
 	    }
 	} catch (SQLException e) {
-	    e.printStackTrace();
+	     throw new RuntimeException("Error al obtener los usuarios asignados al instructor de la base de datos", e);
 	}
 	return userList;
     }
@@ -152,7 +153,7 @@ public class DataAccess {
 		workoutList.add(workout);
 	    }
 	} catch (SQLException e) {
-	    e.printStackTrace();
+	     throw new RuntimeException("Error al obtener los entrenamientos del usuario de la base de datos", e);
 	}
 	return workoutList;
     }
@@ -176,7 +177,7 @@ public class DataAccess {
 		exerciseList.add(exercise);
 	    }
 	} catch (SQLException e) {
-	    e.printStackTrace();
+	     throw new RuntimeException("Error al obtener los ejercicios del entrenamiento de la base de datos", e);
 	}
 	return exerciseList;
     }
@@ -199,7 +200,7 @@ public class DataAccess {
 		exerciseList.add(exercise);
 	    }
 	} catch (SQLException e) {
-	    e.printStackTrace();
+	    throw new RuntimeException("Error al obtener el listado de ejercicios de la base de datos", e);
 	}
 	return exerciseList;
     }
@@ -232,7 +233,7 @@ public class DataAccess {
 		}
 	    }
 	} catch (SQLException e) {
-	    e.printStackTrace();
+	     throw new RuntimeException("Error al insertar el entrenamiento en la base de datos", e);
 	}
 	return 0;
     }
@@ -247,18 +248,17 @@ public class DataAccess {
 	return exerciseList.size();
     }
 
-    private static int insertExerciciPerWorkout(int wId, Exercise exercise) {
+    private static int insertExerciciPerWorkout(int workoutId, Exercise exercise) {
 	String sql = "INSERT INTO dbo.ExercicisWorkouts (IdWorkout, IdExercici)"
 		+ " VALUES (?,?)";
 	try (Connection conn = getConnection(); PreparedStatement insertStatement = conn.prepareStatement(sql)) {
-	    insertStatement.setInt(1, wId);
+	    insertStatement.setInt(1, workoutId);
 	    insertStatement.setInt(2, exercise.getId());
 	    int rowsAffected = insertStatement.executeUpdate();
 	    return rowsAffected;
-	} catch (SQLException ex) {
-	    ex.printStackTrace();
+	} catch (SQLException e) {
+	     throw new RuntimeException("Error al asociar ejercicios al entrenamiento en la base de datos", e);
 	}
-	return 0;
     }
 
     public static boolean deleteWorkout(int workoutId) {
@@ -295,18 +295,17 @@ public class DataAccess {
 		try {
 		    conn.rollback(); // Revertir en caso de error
 		} catch (SQLException ex) {
-		    ex.printStackTrace();
+		     throw new RuntimeException("Error al revertir la transacción de eliminación del entrenamiento", ex);
 		}
 	    }
-	    e.printStackTrace();
-	    return false;
+	     throw new RuntimeException("Error al eliminar el entrenamiento y sus ejercicios asociados", e);
 	} finally {
 	    if (conn != null) {
 		try {
 		    conn.setAutoCommit(true); // Restaurar el autocommit
 		    conn.close();
 		} catch (SQLException e) {
-		    e.printStackTrace();
+		     throw new RuntimeException("Error al cerrar la conexión después de eliminar el entrenamiento", e);
 		}
 	    }
 	}
