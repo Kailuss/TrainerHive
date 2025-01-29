@@ -4,11 +4,11 @@ package oton.trainerhive.gui;
  *
  * @author Kailuss
  */
-public class PanelLogIn extends javax.swing.JPanel {
+public class LoginPanel extends javax.swing.JPanel {
 
-    private final FramePrincipal principal;
+    private final MainFrame principal;
 
-    public PanelLogIn(FramePrincipal principal) {
+    public LoginPanel(MainFrame principal) {
 	this.principal = principal;
 	initComponents();
     }
@@ -92,7 +92,7 @@ public class PanelLogIn extends javax.swing.JPanel {
 
     // Abre el diálogo de LogIn
     private void buttonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonLoginActionPerformed
-	DialogLogin jDialogLogin = new DialogLogin(principal, true);
+	LoginDialog jDialogLogin = new LoginDialog(principal, true);
 	jDialogLogin.setVisible(true);
     }//GEN-LAST:event_buttonLoginActionPerformed
 

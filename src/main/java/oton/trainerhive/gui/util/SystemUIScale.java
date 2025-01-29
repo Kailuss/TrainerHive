@@ -11,12 +11,12 @@ import java.awt.GraphicsEnvironment;
  *
  * @author Kailuss
  */
-public class HiDPIScale {
+public class SystemUIScale {
 
-    public static void checkHiDPIScale() {
-	GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-	GraphicsConfiguration gc = gd.getDefaultConfiguration();
-	double scale = gc.getDefaultTransform().getScaleX();
-	System.setProperty("sun.java2d.uiScale", String.valueOf(scale));
+    public static void checkSystemUIScale() {
+	GraphicsDevice graphicsDevice = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+	GraphicsConfiguration graphicsConfiguration = graphicsDevice.getDefaultConfiguration();
+	double systemUIScale = graphicsConfiguration.getDefaultTransform().getScaleX();
+	System.setProperty("sun.java2d.uiScale", String.valueOf(systemUIScale));
     }
 }

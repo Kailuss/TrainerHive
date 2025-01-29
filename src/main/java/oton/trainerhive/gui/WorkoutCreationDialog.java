@@ -13,37 +13,37 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import oton.trainerhive.dataaccess.DataAccess;
-import oton.trainerhive.dto.Ejercicio;
-import oton.trainerhive.dto.Entrenamiento;
-import oton.trainerhive.dto.Usuario;
-import oton.trainerhive.gui.tablemodels.EjerciciosSimpleTableModel;
+import oton.trainerhive.dto.Exercise;
+import oton.trainerhive.dto.Workout;
+import oton.trainerhive.dto.User;
+import oton.trainerhive.gui.tablemodels.ExercisesSimpleTableModel;
 
 /**
  *
  * @author Alfonso Otón
  */
-public final class DialogWorkoutCreation extends javax.swing.JDialog {
+public final class WorkoutCreationDialog extends javax.swing.JDialog {
 
     private static final String DEFAULT_COMBOBOX_TEXT = "Añade un ejercicio";
-    private final FramePrincipal principal;
-    private final PanelTables panelTables;
-    private final ArrayList<Ejercicio> addedExercises;
-    private final ArrayList<Ejercicio> allExercises;
-    private Ejercicio selectedExercise;
-    private final Usuario selectedUser;
-    private final Entrenamiento newWorkout;
+    private final MainFrame principal;
+    private final TablesPanel panelTables;
+    private final ArrayList<Exercise> addedExercises;
+    private final ArrayList<Exercise> allExercises;
+    private Exercise selectedExercise;
+    private final User selectedUser;
+    private final Workout newWorkout;
 
-    public DialogWorkoutCreation(FramePrincipal parent, boolean modal, Usuario selectedUser) {
+    public WorkoutCreationDialog(MainFrame parent, boolean modal, User selectedUser) {
 	super(parent, modal);
 	this.principal = parent;
-	this.panelTables = (PanelTables) principal.getContentPane().getComponent(0);
+	this.panelTables = (TablesPanel) principal.getContentPane().getComponent(0);
 	this.selectedUser = selectedUser;
-	this.newWorkout = new Entrenamiento();
+	this.newWorkout = new Workout();
 	this.addedExercises = new ArrayList<>();
 	this.allExercises = DataAccess.getAllExercicis();
 
 	initComponents();
-	setTitle("Nueva actividad para " + this.selectedUser.getNom());
+	setTitle("Nueva actividad para " + this.selectedUser.getName());
 	setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/btn_icons/NewWorkout16.png")));
 	initializeDialog();
     }
@@ -83,7 +83,7 @@ public final class DialogWorkoutCreation extends javax.swing.JDialog {
     private void setComboBoxListener() {
 	comboBoxExercises.addActionListener(e -> {
 	    if (comboBoxExercises.getSelectedIndex() > 0) {
-		addExerciseToTable((Ejercicio) comboBoxExercises.getSelectedItem());
+		addExerciseToTable((Exercise) comboBoxExercises.getSelectedItem());
 		resetComboBox();
 		refreshUI();
 	    }
@@ -105,7 +105,7 @@ public final class DialogWorkoutCreation extends javax.swing.JDialog {
     private void updateAvailableExercises() {
 	comboBoxExercises.removeAllItems();
 	comboBoxExercises.addItem(null);
-	for (Ejercicio ejercicio : allExercises) {
+	for (Exercise ejercicio : allExercises) {
 	    if (!addedExercises.contains(ejercicio)) {
 		comboBoxExercises.addItem(ejercicio);
 	    }
@@ -114,7 +114,7 @@ public final class DialogWorkoutCreation extends javax.swing.JDialog {
     }
 
     // Agrega un ejercicio a la tabla
-    private void addExerciseToTable(Ejercicio exercise) {
+    private void addExerciseToTable(Exercise exercise) {
 	addedExercises.add(exercise);
     }
 
@@ -160,7 +160,7 @@ public final class DialogWorkoutCreation extends javax.swing.JDialog {
     }
 
     private void updateExercisesTable() {
-	tableExercises.setModel(new EjerciciosSimpleTableModel(addedExercises));
+	tableExercises.setModel(new ExercisesSimpleTableModel(addedExercises));
 	tableExercises.revalidate();
 	tableExercises.repaint();
     }
@@ -174,8 +174,8 @@ public final class DialogWorkoutCreation extends javax.swing.JDialog {
 	return !event.getValueIsAdjusting() && table.getSelectedRow() >= 0;
     }
 
-    private Ejercicio getSelectedExercise(JTable table) {
-	return ((EjerciciosSimpleTableModel) table.getModel()).getExerciseAt(table.getSelectedRow());
+    private Exercise getSelectedExercise(JTable table) {
+	return ((ExercisesSimpleTableModel) table.getModel()).getExerciseAt(table.getSelectedRow());
     }
 
     private boolean isRowSelected() {
@@ -224,7 +224,7 @@ public final class DialogWorkoutCreation extends javax.swing.JDialog {
 	}
     }
 
-    private Entrenamiento getNewWorkout() {
+    private Workout getNewWorkout() {
 	newWorkout.setComments(textFieldWorkoutComments.getText());
 	newWorkout.setForDate(formattedTextFieldDate.getText());
 	newWorkout.setUserId(selectedUser.getId());
@@ -271,10 +271,8 @@ public final class DialogWorkoutCreation extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Nueva actividad para Bart");
         setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        setMaximumSize(new java.awt.Dimension(400, 400));
         setMinimumSize(new java.awt.Dimension(400, 400));
         setModal(true);
-        setPreferredSize(new java.awt.Dimension(400, 400));
         setResizable(false);
         setSize(new java.awt.Dimension(400, 400));
 
@@ -514,7 +512,7 @@ public final class DialogWorkoutCreation extends javax.swing.JDialog {
     private javax.swing.JButton buttonMoveUp;
     private javax.swing.JButton buttonRemoveExercise;
     private javax.swing.JButton buttonSaveWorkout;
-    private javax.swing.JComboBox<Ejercicio> comboBoxExercises;
+    private javax.swing.JComboBox<oton.trainerhive.dto.Exercise> comboBoxExercises;
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler2;
     private javax.swing.Box.Filler filler3;

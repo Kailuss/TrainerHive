@@ -8,12 +8,12 @@ package oton.trainerhive.gui;
  *
  * @author Kailuss
  */
-public class DialogAcercaDe extends javax.swing.JDialog {
+public class AboutDialog extends javax.swing.JDialog {
 
     /**
      * Creates new form DialogAcercaDe
      */
-    public DialogAcercaDe(java.awt.Frame parent, boolean modal) {
+    public AboutDialog(java.awt.Frame parent, boolean modal) {
 	super(parent, modal);
 	initComponents();
     }

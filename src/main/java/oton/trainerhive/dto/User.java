@@ -4,14 +4,13 @@ package oton.trainerhive.dto;
  *
  * @author Kailuss
  */
-public class Usuario {
+public class User {
     private int Id;
-    private String Nom;
+    private String Name;
     private String Email;
     private String PasswordHash;
-    private byte[] Foto;
-
-    private String FotoFilename;
+    private byte[] Photo;
+    private String PhotoFilename;
     private boolean Instructor;
     private int AssignedInstructor;
 
@@ -23,12 +22,12 @@ public class Usuario {
 	this.Id = Id;
     }
 
-    public String getNom() {
-	return Nom;
+    public String getName() {
+	return Name;
     }
 
-    public void setNom(String Nom) {
-	this.Nom = Nom;
+    public void setName(String Name) {
+	this.Name = Name;
     }
 
     public String getEmail() {
@@ -47,20 +46,20 @@ public class Usuario {
 	this.PasswordHash = PasswordHash;
     }
 
-    public byte[] getFoto() {
-	return Foto;
+    public byte[] getPhoto() {
+	return Photo;
     }
 
-    public void setFoto(byte[] Foto) {
-	this.Foto = Foto;
+    public void setPhoto(byte[] Photo) {
+	this.Photo = Photo;
     }
     
-    public String getFotoFilename() {
-	return FotoFilename;
+    public String getPhotoFilename() {
+	return PhotoFilename;
     }
 
-    public void setFotoFilename(String FotoFileName) {
-	this.FotoFilename = FotoFileName;
+    public void setPhotoFilename(String PhotoFileName) {
+	this.PhotoFilename = PhotoFileName;
     }
 
     public boolean isInstructor() {

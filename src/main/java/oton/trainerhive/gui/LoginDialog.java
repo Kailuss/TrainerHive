@@ -5,21 +5,21 @@ import java.awt.event.ItemListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import oton.trainerhive.dataaccess.DataAccess;
-import oton.trainerhive.dto.Usuario;
-import oton.trainerhive.gui.FramePrincipal.PanelType;
+import oton.trainerhive.dto.User;
+import oton.trainerhive.gui.MainFrame.PanelType;
 
 /**
  *
  * @author Alfonso Otón
  */
-public class DialogLogin extends javax.swing.JDialog {
+public class LoginDialog extends javax.swing.JDialog {
 
-    private final FramePrincipal principal;
+    private final MainFrame principal;
 
     // Constructor del diálogo de inicio de sesión
-    public DialogLogin(java.awt.Frame parent, boolean modal) {
+    public LoginDialog(java.awt.Frame parent, boolean modal) {
 	super(parent, modal);
-	principal = (FramePrincipal) parent;
+	principal = (MainFrame) parent;
 	initComponents();
 	setupUI();
     }
@@ -70,7 +70,7 @@ public class DialogLogin extends javax.swing.JDialog {
     }
 
     // Método para gestionar el inicio de sesión
-    private void successfulLogin(Usuario user) {
+    private void successfulLogin(User user) {
 	principal.setActiveUser(user);
 	principal.swapPanel(PanelType.TABLES);
 	principal.logIn();
@@ -218,7 +218,7 @@ public class DialogLogin extends javax.swing.JDialog {
 
 	// Intenta iniciar sesión
 	try {
-	    ArrayList<Usuario> instructors = DataAccess.getInstructor(userMail);
+	    ArrayList<User> instructors = DataAccess.getInstructor(userMail);
 
 	    if (instructors.isEmpty()) {
 		loginErrorLabel.setText("El usuario no existe.");
@@ -226,7 +226,7 @@ public class DialogLogin extends javax.swing.JDialog {
 	    }
 
 	    // Comprueba cada usuario devuelto (se espera solo uno)
-	    Usuario user = instructors.get(0);
+	    User user = instructors.get(0);
 	    if (DataAccess.decryptPassword(password, user.getPasswordHash())) {
 		successfulLogin(user);
 	    } else {

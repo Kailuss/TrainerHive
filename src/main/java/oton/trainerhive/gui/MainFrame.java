@@ -4,23 +4,23 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
-import oton.trainerhive.dto.Usuario;
-import oton.trainerhive.gui.util.UIConstantes;
+import oton.trainerhive.dto.User;
+import oton.trainerhive.gui.util.UIConstants;
 
 /**
  *
  * @author Alfonso Otón
  */
-public final class FramePrincipal extends javax.swing.JFrame {
+public final class MainFrame extends javax.swing.JFrame {
 
     private JPanel activePanel;					// Panel activo
-    private Usuario activeUser;					// Usuario que ha iniciado sesión
+    private User activeUser;					// Usuario que ha iniciado sesión
     private final DefaultTableCellRenderer cellRenderer;	// Configuración de las celdas de las tablas
-    private PanelLogIn panel_LogIn;				// Panel de bienvenida
-    private PanelTables panel_Tables;				// Panel de usuarios
+    private LoginPanel panel_LogIn;				// Panel de bienvenida
+    private TablesPanel panel_Tables;				// Panel de usuarios
 
     // Constructor
-    public FramePrincipal() {
+    public MainFrame() {
 	initComponents();
 	this.cellRenderer = createTableCellRenderer();		// Configura el formato que tendran las celdas
 	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	// Deja de ejecutar el programa al cerrar la ventana
@@ -113,7 +113,7 @@ public final class FramePrincipal extends javax.swing.JFrame {
 
     private void menuTHSessionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuTHSessionActionPerformed
 	if (activePanel == panel_LogIn) {
-	    DialogLogin jDialogLogin = new DialogLogin(this, true);
+	    LoginDialog jDialogLogin = new LoginDialog(this, true);
 	    jDialogLogin.setVisible(true);
 	} else if (activePanel == panel_Tables)
 	    logOut();
@@ -131,7 +131,7 @@ public final class FramePrincipal extends javax.swing.JFrame {
 		javax.swing.JLabel label = (javax.swing.JLabel) super.getTableCellRendererComponent(table, value,
 			isSelected, hasFocus, row, column);
 		// Configura el cell renderer component para añadir 16 píxeles de margen interno a cada lado del contenido.
-		label.setBorder(new EmptyBorder(0, UIConstantes.CELL_PADDING_LEFT, 0, UIConstantes.CELL_PADDING_RIGHT));
+		label.setBorder(new EmptyBorder(0, UIConstants.CELL_PADDING_LEFT, 0, UIConstants.CELL_PADDING_RIGHT));
 		return label;
 	    }
 	};
@@ -150,11 +150,11 @@ public final class FramePrincipal extends javax.swing.JFrame {
 	// Crea y asigna el nuevo panel.
 	activePanel = switch (panelType) {
 	    case LOGIN -> {
-		panel_LogIn = new PanelLogIn(this);
+		panel_LogIn = new LoginPanel(this);
 		yield panel_LogIn;
 	    }
 	    case TABLES -> {
-		panel_Tables = new PanelTables(this);
+		panel_Tables = new TablesPanel(this);
 		yield panel_Tables;
 	    }
 	};
@@ -178,11 +178,11 @@ public final class FramePrincipal extends javax.swing.JFrame {
 	menuTHNewWorkout.setEnabled(false);
     }
 
-    public Usuario getActiveUser() {
+    public User getActiveUser() {
 	return activeUser;
     }
 
-    public void setActiveUser(Usuario activeUser) {
+    public void setActiveUser(User activeUser) {
 	this.activeUser = activeUser;
     }
 

@@ -6,7 +6,7 @@ import java.awt.Color;
  *
  * @author Alfonso Otón
  */
-public final class UIConstantes {
+public final class UIConstants {
     // Colores
     public static final Color GRIS_OSCURO = new Color(38, 40, 41);
     public static final Color GRIS_MEDIO = new Color(90, 94, 96);
@@ -21,5 +21,5 @@ public final class UIConstantes {
     public static final int COLUMN_WIDTH_ENTRENAMIENTOS_2 = 240;
     public static final int COLUMN_WIDTH_EJERCICIOS = 239;
 
-    private UIConstantes() { }
+    private UIConstants() { }
 }

@@ -12,28 +12,28 @@ import javax.imageio.ImageIO;
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.geometry.Positions;
 
-import oton.trainerhive.dto.Usuario;
+import oton.trainerhive.dto.User;
 
 public class UserAvatarGenerator {
 
     /**
      * Crea un avatar de usuario y lo guarda en la caché del sistema. Este código ha sido creado siguiendo las instrucciones del módulo Thumbnailator.
      *
-     * @param usuario Objeto Usuario con la imagen en formato de bytes.
-     * @param size Tamaño deseado del avatar en píxeles.
+     * @param user Objeto Usuario con la imagen en formato de bytes.
+     * @param avatarSize Tamaño deseado del avatar en píxeles.
      * @param applyMask Indica si se debe aplicar una máscara hexagonal a la imagen.
      */
-    public static void createUserAvatar(Usuario usuario, int size, boolean applyMask) {
+    public static void createUserAvatar(User user, int avatarSize, boolean applyMask) {
 	// Obtiene la escala de UI del sistema (Windows)
-	String uiScaleProperty = System.getProperty("sun.java2d.uiScale", "1.0"); // Escala al 100% por defecto
-	float uiScale = Float.parseFloat(uiScaleProperty);
-	int avatarSize = (int) (size * uiScale); // Tamaño final del avatar
+	String systemUIScaleProperty = System.getProperty("sun.java2d.uiScale", "1.0"); // Escala al 100% por defecto
+	float systemUIScale = Float.parseFloat(systemUIScaleProperty);
+	int finalAvatarSize = (int) (avatarSize * systemUIScale); // Tamaño final del avatar
 
 	try {
 	    // Define la ruta de la caché
-	    String userHome = System.getProperty("user.home");
-	    File cacheDir = new File(userHome, "AppData/Local/TrainerHive/cache");
-	    File outputFile = new File(cacheDir, usuario.getFotoFilename());
+	    String systemUserHome = System.getProperty("user.home");
+	    File cacheDir = new File(systemUserHome, "AppData/Local/TrainerHive/cache");
+	    File outputFile = new File(cacheDir, user.getPhotoFilename());
 	    InputStream maskFile = UserAvatarGenerator.class.getClassLoader().getResourceAsStream("images/hexMask.png");
 
 	    if (!cacheDir.exists()) {
@@ -41,9 +41,9 @@ public class UserAvatarGenerator {
 	    }
 
 	    // Carga y ajusta la imagen de usuario
-	    ByteArrayInputStream bis = new ByteArrayInputStream(usuario.getFoto());
+	    ByteArrayInputStream bis = new ByteArrayInputStream(user.getPhoto());
 	    BufferedImage originalImage = Thumbnails.of(bis)
-		    .size(avatarSize, avatarSize)
+		    .size(finalAvatarSize, finalAvatarSize)
 		    .crop(Positions.CENTER)
 		    .outputQuality(1.0)
 		    .asBufferedImage();
@@ -52,7 +52,7 @@ public class UserAvatarGenerator {
 	    if (applyMask) {
 		// Carga y escala la máscara
 		BufferedImage mask = Thumbnails.of(ImageIO.read(maskFile))
-			.size(avatarSize, avatarSize)
+			.size(finalAvatarSize, finalAvatarSize)
 			.asBufferedImage();
 		BufferedImage hexThumbnail = applyMask(originalImage, mask);
 		ImageIO.write(hexThumbnail, "PNG", outputFile);

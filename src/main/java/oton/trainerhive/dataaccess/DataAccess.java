@@ -1,6 +1,5 @@
 package oton.trainerhive.dataaccess;
 
-import at.favre.lib.crypto.bcrypt.BCrypt;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
@@ -10,9 +9,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
-import oton.trainerhive.dto.Ejercicio;
-import oton.trainerhive.dto.Entrenamiento;
-import oton.trainerhive.dto.Usuario;
+
+import at.favre.lib.crypto.bcrypt.BCrypt;
+
+import oton.trainerhive.dto.Exercise;
+import oton.trainerhive.dto.Workout;
+import oton.trainerhive.dto.User;
 import oton.trainerhive.gui.util.UserAvatarGenerator;
 
 /**
@@ -57,15 +59,15 @@ public class DataAccess {
      *
      * @return @throws SQLException
      */
-    public static ArrayList<Usuario> getUsuaris() throws SQLException {
-	ArrayList<Usuario> usuaris = new ArrayList<>();
+    public static ArrayList<User> getUsuaris() throws SQLException {
+	ArrayList<User> usuaris = new ArrayList<>();
 	String sql = "SELECT * FROM Usuaris";
 	try (Connection connection = getConnection(); PreparedStatement selectStatement = connection.prepareStatement(sql)) {
 	    ResultSet resultSet = selectStatement.executeQuery();
 	    while (resultSet.next()) {
-		Usuario user = new Usuario();
+		User user = new User();
 		user.setId(resultSet.getInt("Id"));
-		user.setNom(resultSet.getString("Nom"));
+		user.setName(resultSet.getString("Nom"));
 		user.setEmail(resultSet.getString("Email"));
 		user.setPasswordHash(resultSet.getString("PasswordHash"));
 		//user.setFoto(resultSet.getBytes("Foto"));
@@ -85,19 +87,19 @@ public class DataAccess {
      * @return
      * @throws SQLException
      */
-    public static ArrayList<Usuario> getInstructor(String userMail) throws SQLException {
-	ArrayList<Usuario> usuaris = new ArrayList<>();
+    public static ArrayList<User> getInstructor(String userMail) throws SQLException {
+	ArrayList<User> usuaris = new ArrayList<>();
 	String sql = "SELECT * FROM Usuaris WHERE Instructor = 1 AND Email='" + userMail + "'";
 	try (Connection connection = getConnection(); PreparedStatement selectStatement = connection.prepareStatement(sql)) {
 	    ResultSet resultSet = selectStatement.executeQuery();
 	    while (resultSet.next()) {
-		Usuario user = new Usuario();
+		User user = new User();
 		user.setId(resultSet.getInt("Id"));
-		user.setNom(resultSet.getString("Nom"));
+		user.setName(resultSet.getString("Nom"));
 		user.setEmail(resultSet.getString("Email"));
 		user.setPasswordHash(resultSet.getString("PasswordHash"));
-		user.setFoto(resultSet.getBytes("Foto"));
-		user.setFotoFilename(resultSet.getString("FotoFilename"));
+		user.setPhoto(resultSet.getBytes("Foto"));
+		user.setPhotoFilename(resultSet.getString("FotoFilename"));
 		usuaris.add(user);
 		UserAvatarGenerator.createUserAvatar(user, 40, true);
 	    }
@@ -107,33 +109,33 @@ public class DataAccess {
 	return usuaris;
     }
 
-    public static ArrayList<Usuario> getAllUsersByInstructor(int idInstructor) {
-	ArrayList<Usuario> usuaris = new ArrayList<>();
+    public static ArrayList<User> getAllUsersByInstructor(int idInstructor) {
+	ArrayList<User> userList = new ArrayList<>();
 	String sql = "SELECT * FROM Usuaris WHERE AssignedInstructor=?";
 	try (Connection connection = getConnection(); PreparedStatement selectStatement = connection.prepareStatement(sql);) {
 	    selectStatement.setInt(1, idInstructor);
 	    ResultSet resultSet = selectStatement.executeQuery();
 
 	    while (resultSet.next()) {
-		Usuario user = new Usuario();
+		User user = new User();
 		user.setId(resultSet.getInt("Id"));
-		user.setNom(resultSet.getString("Nom"));
+		user.setName(resultSet.getString("Nom"));
 		user.setEmail(resultSet.getString("Email"));
 		user.setPasswordHash(resultSet.getString("PasswordHash"));
-		user.setFoto(resultSet.getBytes("Foto"));
-		user.setFotoFilename(resultSet.getString("FotoFilename"));
+		user.setPhoto(resultSet.getBytes("Foto"));
+		user.setPhotoFilename(resultSet.getString("FotoFilename"));
 		user.setInstructor(resultSet.getBoolean("Instructor"));
-		usuaris.add(user);
+		userList.add(user);
 		UserAvatarGenerator.createUserAvatar(user, 40, true);
 	    }
 	} catch (SQLException e) {
 	    e.printStackTrace();
 	}
-	return usuaris;
+	return userList;
     }
 
-    public static ArrayList<Entrenamiento> getWorkoutsPerUser(Usuario user) {
-	ArrayList<Entrenamiento> workouts = new ArrayList<>();
+    public static ArrayList<Workout> getWorkoutsPerUser(User user) {
+	ArrayList<Workout> workoutList = new ArrayList<>();
 	String sql = "SELECT * FROM Workouts"
 		+ " WHERE Workouts.UserId=?"
 		+ " ORDER BY Workouts.ForDate";
@@ -142,45 +144,45 @@ public class DataAccess {
 	    ResultSet resultSet = selectStatement.executeQuery();
 
 	    while (resultSet.next()) {
-		Entrenamiento workout = new Entrenamiento();
+		Workout workout = new Workout();
 		workout.setId(resultSet.getInt("Id"));
 		workout.setForDate(resultSet.getString("ForDate"));
 		workout.setUserId(resultSet.getInt("UserId"));
 		workout.setComments(resultSet.getString("Comments"));
-		workouts.add(workout);
+		workoutList.add(workout);
 	    }
 	} catch (SQLException e) {
 	    e.printStackTrace();
 	}
-	return workouts;
+	return workoutList;
     }
 
-    public static ArrayList<Ejercicio> getExercicisPerWorkout(Entrenamiento entrenamiento) {
-	ArrayList<Ejercicio> ejercicios = new ArrayList<>();
+    public static ArrayList<Exercise> getExercicisPerWorkout(Workout workout) {
+	ArrayList<Exercise> exerciseList = new ArrayList<>();
 	String sql = "SELECT ExercicisWorkouts.IdExercici,"
 		+ " Exercicis.NomExercici, Exercicis.Descripcio, Exercicis.DemoFoto"
 		+ " FROM ExercicisWorkouts INNER JOIN Exercicis ON ExercicisWorkouts.IdExercici=Exercicis.Id"
 		+ " WHERE ExercicisWorkouts.IdWorkout=?";
 	try (Connection connection = getConnection(); PreparedStatement selectStatement = connection.prepareStatement(sql);) {
-	    selectStatement.setInt(1, entrenamiento.getId());
+	    selectStatement.setInt(1, workout.getId());
 	    ResultSet resultSet = selectStatement.executeQuery();
 
 	    while (resultSet.next()) {
-		Ejercicio ejercicio = new Ejercicio();
-		ejercicio.setId(resultSet.getInt("IdExercici"));
-		ejercicio.setNomExercici(resultSet.getString("NomExercici"));
-		ejercicio.setDescripcio(resultSet.getString("Descripcio"));
+		Exercise exercise = new Exercise();
+		exercise.setId(resultSet.getInt("IdExercici"));
+		exercise.setName(resultSet.getString("NomExercici"));
+		exercise.setDescription(resultSet.getString("Descripcio"));
 		//ejercicio.setDemoFoto(resultSet.getString("DemoFoto"));
-		ejercicios.add(ejercicio);
+		exerciseList.add(exercise);
 	    }
 	} catch (SQLException e) {
 	    e.printStackTrace();
 	}
-	return ejercicios;
+	return exerciseList;
     }
 
-    public static ArrayList<Ejercicio> getAllExercicis() {
-	ArrayList<Ejercicio> ejercicios = new ArrayList<>();
+    public static ArrayList<Exercise> getAllExercicis() {
+	ArrayList<Exercise> exerciseList = new ArrayList<>();
 	String sql = "SELECT Id, Exercicis.NomExercici, Exercicis.Descripcio, Exercicis.DemoFoto"
 		+ " FROM Exercicis";
 	try (Connection connection = getConnection(); PreparedStatement selectStatement = connection.prepareStatement(sql);) {
@@ -188,27 +190,27 @@ public class DataAccess {
 	    ResultSet resultSet = selectStatement.executeQuery();
 
 	    while (resultSet.next()) {
-		Ejercicio ejercicio = new Ejercicio();
-		ejercicio.setId(resultSet.getInt("Id"));
-		ejercicio.setNomExercici(resultSet.getString("NomExercici"));
-		ejercicio.setDescripcio(resultSet.getString("Descripcio"));
+		Exercise exercise = new Exercise();
+		exercise.setId(resultSet.getInt("Id"));
+		exercise.setName(resultSet.getString("NomExercici"));
+		exercise.setDescription(resultSet.getString("Descripcio"));
 		//exercici.setDemoFoto(resultSet.getString("DemoFoto"));
 
-		ejercicios.add(ejercicio);
+		exerciseList.add(exercise);
 	    }
 	} catch (SQLException e) {
 	    e.printStackTrace();
 	}
-	return ejercicios;
+	return exerciseList;
     }
 
-    public static void insertWorkout(Entrenamiento w, ArrayList<Ejercicio> ejercicios) {
+    public static void insertWorkout(Workout workout, ArrayList<Exercise> exerciseList) {
 	// The following should be done in a SQL transaction
-	int newWorkoutId = insertToWorkoutTable(w);
-	insertExercisesPerWorkout(newWorkoutId, ejercicios);
+	int newWorkoutId = insertToWorkoutTable(workout);
+	insertExercisesPerWorkout(newWorkoutId, exerciseList);
     }
 
-    private static int insertToWorkoutTable(Entrenamiento w) {
+    private static int insertToWorkoutTable(Workout w) {
 	String sql = "INSERT INTO dbo.Workouts (ForDate, UserId, Comments)"
 		+ " VALUES (?,?,?)";
 	try (Connection conn = getConnection(); PreparedStatement insertStatement = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);) {
@@ -235,22 +237,22 @@ public class DataAccess {
 	return 0;
     }
 
-    private static int insertExercisesPerWorkout(int wId, ArrayList<Ejercicio> ejercicios) {
-	for (Ejercicio e : ejercicios) {
-	    int rowsAffected = insertExerciciPerWorkout(wId, e);
+    private static int insertExercisesPerWorkout(int wId, ArrayList<Exercise> exerciseList) {
+	for (Exercise exercise : exerciseList) {
+	    int rowsAffected = insertExerciciPerWorkout(wId, exercise);
 	    if (rowsAffected != 1) {
 		return 0;
 	    }
 	}
-	return ejercicios.size();
+	return exerciseList.size();
     }
 
-    private static int insertExerciciPerWorkout(int wId, Ejercicio e) {
+    private static int insertExerciciPerWorkout(int wId, Exercise exercise) {
 	String sql = "INSERT INTO dbo.ExercicisWorkouts (IdWorkout, IdExercici)"
 		+ " VALUES (?,?)";
 	try (Connection conn = getConnection(); PreparedStatement insertStatement = conn.prepareStatement(sql)) {
 	    insertStatement.setInt(1, wId);
-	    insertStatement.setInt(2, e.getId());
+	    insertStatement.setInt(2, exercise.getId());
 	    int rowsAffected = insertStatement.executeUpdate();
 	    return rowsAffected;
 	} catch (SQLException ex) {

@@ -4,26 +4,27 @@ import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
+
 import oton.trainerhive.dataaccess.DataAccess;
-import oton.trainerhive.dto.Ejercicio;
-import oton.trainerhive.dto.Entrenamiento;
-import oton.trainerhive.dto.Usuario;
-import oton.trainerhive.gui.tablemodels.AlumnosTableModel;
-import oton.trainerhive.gui.tablemodels.EjerciciosTableModel;
-import oton.trainerhive.gui.tablemodels.EntrenamientosTableModel;
-import oton.trainerhive.gui.util.UIConstantes;
+import oton.trainerhive.dto.Exercise;
+import oton.trainerhive.dto.Workout;
+import oton.trainerhive.dto.User;
+import oton.trainerhive.gui.tablemodels.UsersTableModel;
+import oton.trainerhive.gui.tablemodels.ExercisesTableModel;
+import oton.trainerhive.gui.tablemodels.WorkoutsTableModel;
+import oton.trainerhive.gui.util.UIConstants;
 
 /**
  *
  * @author Alfonso Otón
  */
-public class PanelTables extends javax.swing.JPanel {
+public class TablesPanel extends javax.swing.JPanel {
 
-    private final FramePrincipal principal;
-    private Usuario selectedUser;
+    private final MainFrame principal;
+    private User selectedUser;
 
     // Constructor.
-    public PanelTables(FramePrincipal principal) {
+    public TablesPanel(MainFrame principal) {
 	this.principal = principal;
 
 	initComponents();
@@ -41,21 +42,21 @@ public class PanelTables extends javax.swing.JPanel {
 
     // Bordes de los paneles.
     private void configureTablePanelBorders() {
-	scrollPaneAlumnos.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, UIConstantes.GRIS_OSCURO));
-	scrollPaneEntrenamientos.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, UIConstantes.GRIS_MEDIO));
+	scrollPaneAlumnos.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, UIConstants.GRIS_OSCURO));
+	scrollPaneEntrenamientos.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, UIConstants.GRIS_MEDIO));
 	scrollPaneEjercicios.setBorder(BorderFactory.createEmptyBorder());
     }
 
     // Ancho de columnas y márgenes de celda.
     private void formatTableColumns() {
-	formatTable(tableAlumnos, UIConstantes.COLUMN_WIDTH_ALUMNOS);
-	formatTable(tableEntrenamientos, UIConstantes.COLUMN_WIDTH_ENTRENAMIENTOS_1, UIConstantes.COLUMN_WIDTH_ENTRENAMIENTOS_2);
-	formatTable(tableEjercicios, UIConstantes.COLUMN_WIDTH_EJERCICIOS);
+	formatTable(tableAlumnos, UIConstants.COLUMN_WIDTH_ALUMNOS);
+	formatTable(tableEntrenamientos, UIConstants.COLUMN_WIDTH_ENTRENAMIENTOS_1, UIConstants.COLUMN_WIDTH_ENTRENAMIENTOS_2);
+	formatTable(tableEjercicios, UIConstants.COLUMN_WIDTH_EJERCICIOS);
     }
 
     // Carga los alumnos y selecciona el primero.
     private void loadAlumnosTable() {
-	tableAlumnos.setModel(new AlumnosTableModel(DataAccess.getAllUsersByInstructor(principal.getActiveUser().getId())));
+	tableAlumnos.setModel(new UsersTableModel(DataAccess.getAllUsersByInstructor(principal.getActiveUser().getId())));
 	if (tableAlumnos.getRowCount() > 0) {
 	    tableAlumnos.getSelectionModel().setSelectionInterval(0, 0);
 	    tableAlumnos.requestFocus();
@@ -94,7 +95,7 @@ public class PanelTables extends javax.swing.JPanel {
 	    // Si la selección es válida, obtiene el entrenamiento seleccionado
 	    // y muestra los ejercicios correspondientes.
 	    if (isValidSelection(event, entrenamientosTabla)) {
-		Entrenamiento entrenamiento = getSelectedEntrenamiento(entrenamientosTabla);
+		Workout entrenamiento = getSelectedEntrenamiento(entrenamientosTabla);
 		mostrarEjerciciosDeEntrenamiento(ejerciciosTabla, entrenamiento);
 	    }
 	});
@@ -106,14 +107,14 @@ public class PanelTables extends javax.swing.JPanel {
     }
 
     // Obtiene el modelo de la tabla de alumnos y devuelve el alumno de la fila seleccionada.
-    private Usuario getSelectedAlumno(JTable alumnosTabla) {
-	AlumnosTableModel model = (AlumnosTableModel) alumnosTabla.getModel();
+    private User getSelectedAlumno(JTable alumnosTabla) {
+	UsersTableModel model = (UsersTableModel) alumnosTabla.getModel();
 	return model.getUserAt(alumnosTabla.getSelectedRow());
     }
 
     // Obtiene el modelo de la tabla de entrenamientos y devuelve el entrenamiento en la fila seleccionada.
-    private Entrenamiento getSelectedEntrenamiento(JTable entrenamientosTabla) {
-	EntrenamientosTableModel model = (EntrenamientosTableModel) entrenamientosTabla.getModel();
+    private Workout getSelectedEntrenamiento(JTable entrenamientosTabla) {
+	WorkoutsTableModel model = (WorkoutsTableModel) entrenamientosTabla.getModel();
 	return model.getEntrenamientoAt(entrenamientosTabla.getSelectedRow());
     }
 
@@ -123,21 +124,21 @@ public class PanelTables extends javax.swing.JPanel {
     }
 
     // Muestra los ejercicios asociados al entrenamiento seleccionado en la tabla de ejercicios.
-    private void mostrarEjerciciosDeEntrenamiento(JTable ejerciciosTabla, Entrenamiento entrenamiento) {
+    private void mostrarEjerciciosDeEntrenamiento(JTable ejerciciosTabla, Workout entrenamiento) {
 	updateEjerciciosTable(ejerciciosTabla, DataAccess.getExercicisPerWorkout(entrenamiento));
     }
 
     // Actualiza el contenido de la tabla de entrenamientos.
-    private void updateEntrenamientosTable(JTable entrenamientosTabla, Usuario alumnoSeleccionado) {
-	ArrayList<Entrenamiento> entrenamientos = DataAccess.getWorkoutsPerUser(alumnoSeleccionado);
-	entrenamientosTabla.setModel(new EntrenamientosTableModel(entrenamientos));
-	formatTable(entrenamientosTabla, UIConstantes.COLUMN_WIDTH_ENTRENAMIENTOS_1, UIConstantes.COLUMN_WIDTH_ENTRENAMIENTOS_2);
+    private void updateEntrenamientosTable(JTable entrenamientosTabla, User alumnoSeleccionado) {
+	ArrayList<Workout> entrenamientos = DataAccess.getWorkoutsPerUser(alumnoSeleccionado);
+	entrenamientosTabla.setModel(new WorkoutsTableModel(entrenamientos));
+	formatTable(entrenamientosTabla, UIConstants.COLUMN_WIDTH_ENTRENAMIENTOS_1, UIConstants.COLUMN_WIDTH_ENTRENAMIENTOS_2);
     }
 
     // Actualiza el contenido de la tabla de ejercicios.
-    private void updateEjerciciosTable(JTable ejerciciosTabla, ArrayList<Ejercicio> ejercicios) {
-	ejerciciosTabla.setModel(new EjerciciosTableModel(ejercicios));
-	formatTable(ejerciciosTabla, UIConstantes.COLUMN_WIDTH_EJERCICIOS);
+    private void updateEjerciciosTable(JTable ejerciciosTabla, ArrayList<Exercise> ejercicios) {
+	ejerciciosTabla.setModel(new ExercisesTableModel(ejercicios));
+	formatTable(ejerciciosTabla, UIConstants.COLUMN_WIDTH_EJERCICIOS);
     }
 
     // Configura las columnas de una tabla según el ancho especificado
@@ -156,10 +157,10 @@ public class PanelTables extends javax.swing.JPanel {
 	// Muestra el número de alumnos que tiene este instructor
 	labelUsersCount.setText(tableAlumnos.getRowCount() + " alumnos registrados.");
 	// Muestra el nombre e Email del instructor
-	labelActiveUser.setText(principal.getActiveUser().getNom() + " (" + principal.getActiveUser().getEmail() + ")");
+	labelActiveUser.setText(principal.getActiveUser().getName() + " (" + principal.getActiveUser().getEmail() + ")");
     }
 
-    public Usuario getSelectedUser() {
+    public User getSelectedUser() {
 	return selectedUser;
     }
 
@@ -487,12 +488,12 @@ public class PanelTables extends javax.swing.JPanel {
     }//GEN-LAST:event_buttonNewWorkoutActionPerformed
 
     private void buttonNewTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNewTaskActionPerformed
-	DialogWorkoutCreation dialogCreateWorkout = new DialogWorkoutCreation(principal, true, selectedUser);
+	WorkoutCreationDialog dialogCreateWorkout = new WorkoutCreationDialog(principal, true, selectedUser);
 	dialogCreateWorkout.setVisible(true);
     }//GEN-LAST:event_buttonNewTaskActionPerformed
 
     private void buttonRemoveTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRemoveTaskActionPerformed
-	Entrenamiento selectedEntrenamiento = getSelectedEntrenamiento(tableEntrenamientos);
+	Workout selectedEntrenamiento = getSelectedEntrenamiento(tableEntrenamientos);
 
 	if (selectedEntrenamiento == null) {
 	    return;
