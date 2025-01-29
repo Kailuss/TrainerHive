@@ -11,6 +11,17 @@
 	<maven.compiler.target>21</maven.compiler.target>
 	<exec.mainClass>oton.trainerhive.TrainerHive</exec.mainClass>
     </properties>
+    <build>
+	<resources>
+	    <resource>
+		<directory>src/main/resources</directory>
+		<includes>
+		    <include>**/*</include>
+		</includes>
+	    </resource>
+	</resources>
+    </build>
+
     <dependencies>
 	<!-- https://mvnrepository.com/artifact/com.microsoft.sqlserver/mssql-jdbc -->
 	<dependency>
@@ -30,10 +41,27 @@
 	    <artifactId>flatlaf</artifactId>
 	    <version>3.5.2</version>
 	</dependency>
-        <dependency>
-            <groupId>org.netbeans.external</groupId>
-            <artifactId>AbsoluteLayout</artifactId>
-            <version>RELEASE230</version>
-        </dependency>
+	<!-- https://mvnrepository.com/artifact/com.kitfox.svg/svg-salamander -->
+	<dependency>
+	    <groupId>com.kitfox.svg</groupId>
+	    <artifactId>svg-salamander</artifactId>
+	    <version>1.0</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.netbeans.external</groupId>
+	    <artifactId>AbsoluteLayout</artifactId>
+	    <version>RELEASE230</version>
+	</dependency>
+	<!-- https://mvnrepository.com/artifact/net.coobird/thumbnailator -->
+	<dependency>
+	    <groupId>net.coobird</groupId>
+	    <artifactId>thumbnailator</artifactId>
+	    <version>0.4.20</version>
+	</dependency>
+	<dependency>
+	    <groupId>oton</groupId>
+	    <artifactId>TrainerHiveCalendar</artifactId>
+	    <version>1.0-SNAPSHOT</version>
+	</dependency>
     </dependencies>
 </project>

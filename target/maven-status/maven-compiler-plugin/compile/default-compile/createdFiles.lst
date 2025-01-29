@@ -6,6 +6,7 @@ oton\trainerhive\dto\Entrenamiento.class
 oton\trainerhive\gui\DialogWorkoutCreation$5.class
 oton\trainerhive\gui\PanelTables$3.class
 oton\trainerhive\gui\DialogAcercaDe.class
+oton\trainerhive\gui\DialogLogin$6.class
 oton\trainerhive\gui\DialogLogin.class
 oton\trainerhive\dto\Usuario.class
 oton\trainerhive\gui\FramePrincipal$PanelType.class
@@ -21,14 +22,18 @@ oton\trainerhive\logic\Main.class
 oton\trainerhive\gui\DialogWorkoutCreation$1.class
 oton\trainerhive\gui\DialogWorkoutCreation$7.class
 oton\trainerhive\gui\PanelTables$7.class
+oton\trainerhive\gui\DialogLogin$7.class
 oton\trainerhive\gui\DialogWorkoutCreation$4.class
 oton\trainerhive\gui\PanelTables$5.class
+oton\trainerhive\gui\util\HiDPIScale.class
 oton\trainerhive\gui\util\UIConstantes.class
 oton\trainerhive\gui\FramePrincipal$5.class
 oton\trainerhive\gui\DialogLogin$4.class
+oton\trainerhive\gui\DialogLogin$8.class
 oton\trainerhive\gui\PanelLogIn$2.class
 oton\trainerhive\gui\DialogWorkoutCreation$8.class
 oton\trainerhive\gui\DialogLogin$1.class
+oton\trainerhive\gui\util\ImageCreator.class
 oton\trainerhive\gui\FramePrincipal$2.class
 oton\trainerhive\gui\DialogLogin$5.class
 oton\trainerhive\gui\DialogWorkoutCreation$3.class

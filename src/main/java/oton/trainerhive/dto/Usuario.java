@@ -10,6 +10,8 @@ public class Usuario {
     private String Email;
     private String PasswordHash;
     private byte[] Foto;
+
+    private String FotoFilename;
     private boolean Instructor;
     private int AssignedInstructor;
 
@@ -51,6 +53,14 @@ public class Usuario {
 
     public void setFoto(byte[] Foto) {
 	this.Foto = Foto;
+    }
+    
+    public String getFotoFilename() {
+	return FotoFilename;
+    }
+
+    public void setFotoFilename(String FotoFileName) {
+	this.FotoFilename = FotoFileName;
     }
 
     public boolean isInstructor() {

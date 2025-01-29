@@ -13,6 +13,7 @@ import java.util.Properties;
 import oton.trainerhive.dto.Ejercicio;
 import oton.trainerhive.dto.Entrenamiento;
 import oton.trainerhive.dto.Usuario;
+import oton.trainerhive.gui.util.UserAvatarGenerator;
 
 /**
  *
@@ -95,8 +96,10 @@ public class DataAccess {
 		user.setNom(resultSet.getString("Nom"));
 		user.setEmail(resultSet.getString("Email"));
 		user.setPasswordHash(resultSet.getString("PasswordHash"));
-		//user.setFoto(resultSet.getBytes("Foto"));
+		user.setFoto(resultSet.getBytes("Foto"));
+		user.setFotoFilename(resultSet.getString("FotoFilename"));
 		usuaris.add(user);
+		UserAvatarGenerator.createUserAvatar(user, 40, true);
 	    }
 	    selectStatement.close();
 	    connection.close();
@@ -117,8 +120,11 @@ public class DataAccess {
 		user.setNom(resultSet.getString("Nom"));
 		user.setEmail(resultSet.getString("Email"));
 		user.setPasswordHash(resultSet.getString("PasswordHash"));
+		user.setFoto(resultSet.getBytes("Foto"));
+		user.setFotoFilename(resultSet.getString("FotoFilename"));
 		user.setInstructor(resultSet.getBoolean("Instructor"));
 		usuaris.add(user);
+		UserAvatarGenerator.createUserAvatar(user, 40, true);
 	    }
 	} catch (SQLException e) {
 	    e.printStackTrace();
