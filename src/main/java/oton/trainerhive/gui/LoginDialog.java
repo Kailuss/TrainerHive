@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import oton.trainerhive.dataaccess.DataAccess;
 import oton.trainerhive.dto.User;
 import oton.trainerhive.gui.MainFrame.PanelType;
+import oton.trainerhive.gui.util.FontManager;
 
 /**
  *
@@ -26,6 +27,8 @@ public class LoginDialog extends javax.swing.JDialog {
 
     // Configuración inicial de la interfaz
     private void setupUI() {
+	FontManager.applyFontToContainer(this, 13f, 13f);
+	FontManager.applyFont(loginButton, "bold", 13);
 	getRootPane().setDefaultButton(loginButton);	// Botón predeterminado al presionar Enter
 	setLocationRelativeTo(principal);		// Centra el diálogo respecto al Frame principal
 

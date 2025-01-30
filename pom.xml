@@ -21,7 +21,6 @@
 	    </resource>
 	</resources>
     </build>
-
     <dependencies>
 	<!-- https://mvnrepository.com/artifact/com.microsoft.sqlserver/mssql-jdbc -->
 	<dependency>

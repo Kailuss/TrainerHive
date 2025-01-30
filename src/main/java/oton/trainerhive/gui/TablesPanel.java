@@ -12,8 +12,8 @@ import oton.trainerhive.dto.User;
 import oton.trainerhive.gui.tablemodels.UsersTableModel;
 import oton.trainerhive.gui.tablemodels.ExercisesTableModel;
 import oton.trainerhive.gui.tablemodels.WorkoutsTableModel;
+import oton.trainerhive.gui.util.FontManager;
 import oton.trainerhive.gui.util.UIConstants;
-import oton.trainerhive.gui.util.SVGRenderer;
 
 /**
  *
@@ -39,13 +39,18 @@ public class TablesPanel extends javax.swing.JPanel {
 	configureTableListeners();
 	loadAlumnosTable();
 	formatTableColumns();
+	setupUI();
+    }
+
+    private void setupUI() {
+	FontManager.applyFontToContainer(this, 13f, 13f);
     }
 
     // Bordes de los paneles.
     private void configureTablePanelBorders() {
 	scrollPaneAlumnos.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, UIConstants.GRIS_OSCURO));
 	scrollPaneEntrenamientos.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, UIConstants.GRIS_MEDIO));
-	scrollPaneEjercicios.setBorder(BorderFactory.createEmptyBorder());
+	scrollPaneEjercicios.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, UIConstants.GRIS_MEDIO));
     }
 
     // Ancho de columnas y márgenes de celda.
@@ -179,6 +184,7 @@ public class TablesPanel extends javax.swing.JPanel {
         tableAlumnos = new javax.swing.JTable();
         scrollPaneEntrenamientos = new javax.swing.JScrollPane();
         tableEntrenamientos = new javax.swing.JTable();
+        jPanel3 = new javax.swing.JPanel();
         scrollPaneEjercicios = new javax.swing.JScrollPane();
         tableEjercicios = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
@@ -300,6 +306,8 @@ public class TablesPanel extends javax.swing.JPanel {
 
         jPanel1.add(scrollPaneEntrenamientos, java.awt.BorderLayout.CENTER);
 
+        jPanel3.setLayout(new java.awt.BorderLayout());
+
         scrollPaneEjercicios.setBorder(null);
         scrollPaneEjercicios.setPreferredSize(new java.awt.Dimension(240, 402));
 
@@ -344,7 +352,9 @@ public class TablesPanel extends javax.swing.JPanel {
             tableEjercicios.getColumnModel().getColumn(0).setPreferredWidth(240);
         }
 
-        jPanel1.add(scrollPaneEjercicios, java.awt.BorderLayout.LINE_END);
+        jPanel3.add(scrollPaneEjercicios, java.awt.BorderLayout.LINE_END);
+
+        jPanel1.add(jPanel3, java.awt.BorderLayout.EAST);
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
 
@@ -363,7 +373,6 @@ public class TablesPanel extends javax.swing.JPanel {
 
         buttonNewTask.setIcon(new oton.trainerhive.gui.util.SVGRenderer().getSVGIcon("/icons/task_new", 16, 16));
         buttonNewTask.setText("Asignar");
-        buttonNewTask.setToolTipText("Asignar nuevo entrenamiento al usuario");
         buttonNewTask.setFocusable(false);
         buttonNewTask.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         buttonNewTask.setPreferredSize(new java.awt.Dimension(72, 24));
@@ -377,7 +386,6 @@ public class TablesPanel extends javax.swing.JPanel {
 
         buttonEditTask.setIcon(new oton.trainerhive.gui.util.SVGRenderer().getSVGIcon("/icons/task_edit", 16, 16));
         buttonEditTask.setText("Modificar");
-        buttonEditTask.setToolTipText("Modificar entrenamiento");
         buttonEditTask.setEnabled(false);
         buttonEditTask.setFocusable(false);
         buttonEditTask.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -387,7 +395,6 @@ public class TablesPanel extends javax.swing.JPanel {
 
         buttonRemoveTask.setIcon(new oton.trainerhive.gui.util.SVGRenderer().getSVGIcon("/icons/task_remove", 16, 16));
         buttonRemoveTask.setText("Quitar");
-        buttonRemoveTask.setToolTipText("Quitar entrenamiento a este usuario");
         buttonRemoveTask.setFocusable(false);
         buttonRemoveTask.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         buttonRemoveTask.setPreferredSize(new java.awt.Dimension(72, 24));
@@ -537,6 +544,7 @@ public class TablesPanel extends javax.swing.JPanel {
     private javax.swing.Box.Filler filler7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel labelActiveUser;
     private javax.swing.JLabel labelUsersCount;
     private javax.swing.JScrollPane scrollPaneAlumnos;

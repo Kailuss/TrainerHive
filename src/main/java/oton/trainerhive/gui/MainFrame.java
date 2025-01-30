@@ -4,9 +4,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
+
 import oton.trainerhive.dto.User;
+import oton.trainerhive.gui.util.FontManager;
 import oton.trainerhive.gui.util.UIConstants;
-import oton.trainerhive.gui.util.SVGRenderer;
 
 /**
  *
@@ -25,8 +26,15 @@ public final class MainFrame extends javax.swing.JFrame {
 	initComponents();
 	this.cellRenderer = createTableCellRenderer();		// Configura el formato que tendran las celdas
 	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	// Deja de ejecutar el programa al cerrar la ventana
-	this.setLocationRelativeTo(null);			// Centra el jFrame en pantalla		
+	this.setLocationRelativeTo(null);			// Centra el jFrame en pantalla
+	setupUI();
 	swapPanel(PanelType.LOGIN);				// Carga el panel LogIn
+
+    }
+
+    private void setupUI() {
+	FontManager.applyFontToContainer(this, 13f, 13f);
+	FontManager.applyFont(menuTH, "bold", 13);
     }
 
     // WARNING: Do NOT modify this code.
@@ -45,10 +53,10 @@ public final class MainFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setFocusable(false);
-        setMinimumSize(new java.awt.Dimension(900, 600));
+        setMinimumSize(new java.awt.Dimension(1280, 720));
         setName("mainFrame"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(1024, 800));
-        setSize(new java.awt.Dimension(1024, 800));
+        setPreferredSize(new java.awt.Dimension(1280, 720));
+        setSize(new java.awt.Dimension(1280, 720));
 
         menuBarMain.setBorder(null);
         menuBarMain.setBorderPainted(false);
@@ -128,7 +136,7 @@ public final class MainFrame extends javax.swing.JFrame {
 	return new DefaultTableCellRenderer() {
 	    @Override
 	    public java.awt.Component getTableCellRendererComponent(javax.swing.JTable table, Object value,
-		    boolean isSelected, boolean hasFocus, int row, int column) {
+								    boolean isSelected, boolean hasFocus, int row, int column) {
 		javax.swing.JLabel label = (javax.swing.JLabel) super.getTableCellRendererComponent(table, value,
 			isSelected, hasFocus, row, column);
 		// Configura el cell renderer component para añadir 16 píxeles de margen interno a cada lado del contenido.

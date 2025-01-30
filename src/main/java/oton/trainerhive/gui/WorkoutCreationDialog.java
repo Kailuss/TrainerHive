@@ -17,6 +17,7 @@ import oton.trainerhive.dto.Exercise;
 import oton.trainerhive.dto.Workout;
 import oton.trainerhive.dto.User;
 import oton.trainerhive.gui.tablemodels.ExercisesSimpleTableModel;
+import oton.trainerhive.gui.util.FontManager;
 import oton.trainerhive.gui.util.SVGRenderer;
 
 /**
@@ -45,7 +46,7 @@ public final class WorkoutCreationDialog extends javax.swing.JDialog {
 
 	initComponents();
 	setTitle("Nueva actividad para " + this.selectedUser.getName());
-	//setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/btn_icons/NewWorkout16.png")));
+	FontManager.applyFontToContainer(this, 13f, 13f);
 	initializeDialog();
     }
 
@@ -505,7 +506,7 @@ public final class WorkoutCreationDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_buttonRemoveExerciseActionPerformed
 
     private void formattedTextFieldDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_formattedTextFieldDateActionPerformed
-        // TODO add your handling code here:
+	// TODO add your handling code here:
     }//GEN-LAST:event_formattedTextFieldDateActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
