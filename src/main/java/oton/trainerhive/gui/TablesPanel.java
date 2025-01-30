@@ -50,7 +50,7 @@ public class TablesPanel extends javax.swing.JPanel {
     private void configureTablePanelBorders() {
 	scrollPaneAlumnos.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, UIConstants.GRIS_OSCURO));
 	scrollPaneEntrenamientos.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, UIConstants.GRIS_MEDIO));
-	scrollPaneEjercicios.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, UIConstants.GRIS_MEDIO));
+	scrollPaneEjercicios.setBorder(BorderFactory.createEmptyBorder());
     }
 
     // Ancho de columnas y márgenes de celda.
@@ -242,7 +242,7 @@ public class TablesPanel extends javax.swing.JPanel {
         tableAlumnos.setFillsViewportHeight(true);
         tableAlumnos.setNextFocusableComponent(tableEntrenamientos);
         tableAlumnos.setRowHeight(48);
-        tableAlumnos.setSelectionBackground(new java.awt.Color(251, 232, 96));
+        tableAlumnos.setSelectionBackground(new java.awt.Color(245, 215, 96));
         tableAlumnos.setSelectionForeground(new java.awt.Color(38, 40, 41));
         tableAlumnos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tableAlumnos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
@@ -290,7 +290,7 @@ public class TablesPanel extends javax.swing.JPanel {
         tableEntrenamientos.setMinimumSize(new java.awt.Dimension(480, 192));
         tableEntrenamientos.setRequestFocusEnabled(false);
         tableEntrenamientos.setRowHeight(48);
-        tableEntrenamientos.setSelectionBackground(new java.awt.Color(251, 232, 96));
+        tableEntrenamientos.setSelectionBackground(new java.awt.Color(245, 215, 96));
         tableEntrenamientos.setSelectionForeground(new java.awt.Color(38, 40, 41));
         tableEntrenamientos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tableEntrenamientos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);

@@ -310,7 +310,7 @@ public final class WorkoutCreationDialog extends javax.swing.JDialog {
         tableExercises.setFocusable(false);
         tableExercises.setPreferredSize(new java.awt.Dimension(348, 100));
         tableExercises.setRowHeight(32);
-        tableExercises.setSelectionBackground(new java.awt.Color(251, 232, 96));
+        tableExercises.setSelectionBackground(new java.awt.Color(245, 215, 96));
         tableExercises.setSelectionForeground(new java.awt.Color(38, 40, 41));
         tableExercises.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tableExercises.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);

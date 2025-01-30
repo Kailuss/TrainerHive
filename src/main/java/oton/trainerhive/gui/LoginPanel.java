@@ -18,7 +18,7 @@ public class LoginPanel extends javax.swing.JPanel {
 
     private void setupUI() {
 	FontManager.applyFontToContainer(this, 13f, 13f);
-	FontManager.applyFont(loginButton, "bold", 14);
+	FontManager.applyFont(loginButton, "bold", 15);
     }
 
     @SuppressWarnings("unchecked")
@@ -56,9 +56,9 @@ public class LoginPanel extends javax.swing.JPanel {
             }
         });
 
-        loginButton.setBackground(new java.awt.Color(99, 101, 105));
+        loginButton.setBackground(new java.awt.Color(245, 215, 96));
         loginButton.setFont(new java.awt.Font("sansserif", 1, 13)); // NOI18N
-        loginButton.setForeground(new java.awt.Color(255, 204, 51));
+        loginButton.setForeground(new java.awt.Color(60, 63, 65));
         loginButton.setText("Entra en la colmena");
         loginButton.setToolTipText("");
         loginButton.setActionCommand("");
@@ -93,9 +93,9 @@ public class LoginPanel extends javax.swing.JPanel {
                 .addComponent(labelLogoImg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(labelLogo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 141, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
                 .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
+                .addGap(59, 59, 59)
                 .addComponent(buttonWebsite)
                 .addContainerGap(49, Short.MAX_VALUE))
         );
