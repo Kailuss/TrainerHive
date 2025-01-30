@@ -13,6 +13,7 @@ import oton.trainerhive.gui.tablemodels.UsersTableModel;
 import oton.trainerhive.gui.tablemodels.ExercisesTableModel;
 import oton.trainerhive.gui.tablemodels.WorkoutsTableModel;
 import oton.trainerhive.gui.util.UIConstants;
+import oton.trainerhive.gui.util.SVGRenderer;
 
 /**
  *
@@ -176,19 +177,11 @@ public class TablesPanel extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         scrollPaneAlumnos = new javax.swing.JScrollPane();
         tableAlumnos = new javax.swing.JTable();
-        toolBarUsers = new javax.swing.JToolBar();
-        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(5, 0), new java.awt.Dimension(8, 0), new java.awt.Dimension(5, 32767));
-        labelUsersCount = new javax.swing.JLabel();
-        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
-        labelActiveUser = new javax.swing.JLabel();
-        filler6 = new javax.swing.Box.Filler(new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 32767));
-        buttonLogOut = new javax.swing.JButton();
-        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(4, 0), new java.awt.Dimension(4, 0), new java.awt.Dimension(4, 32767));
-        panelEntramientos = new javax.swing.JPanel();
         scrollPaneEntrenamientos = new javax.swing.JScrollPane();
         tableEntrenamientos = new javax.swing.JTable();
         scrollPaneEjercicios = new javax.swing.JScrollPane();
         tableEjercicios = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
         toolBarEntrenamientos = new javax.swing.JToolBar();
         filler7 = new javax.swing.Box.Filler(new java.awt.Dimension(16, 0), new java.awt.Dimension(16, 0), new java.awt.Dimension(16, 30));
         buttonNewTask = new javax.swing.JButton();
@@ -200,6 +193,14 @@ public class TablesPanel extends javax.swing.JPanel {
         buttonEditWorkout = new javax.swing.JButton();
         buttonEditWorkout1 = new javax.swing.JButton();
         filler5 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 10));
+        toolBarUsers = new javax.swing.JToolBar();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(5, 0), new java.awt.Dimension(8, 0), new java.awt.Dimension(5, 32767));
+        labelUsersCount = new javax.swing.JLabel();
+        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
+        labelActiveUser = new javax.swing.JLabel();
+        filler6 = new javax.swing.Box.Filler(new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 32767));
+        buttonLogOut = new javax.swing.JButton();
+        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(4, 0), new java.awt.Dimension(4, 0), new java.awt.Dimension(4, 32767));
 
         setLayout(new java.awt.BorderLayout());
 
@@ -250,55 +251,6 @@ public class TablesPanel extends javax.swing.JPanel {
 
         jPanel1.add(scrollPaneAlumnos, java.awt.BorderLayout.WEST);
 
-        add(jPanel1, java.awt.BorderLayout.LINE_START);
-
-        toolBarUsers.setBackground(new java.awt.Color(99, 101, 105));
-        toolBarUsers.setRollover(true);
-        toolBarUsers.setMaximumSize(new java.awt.Dimension(960, 26));
-        toolBarUsers.setMinimumSize(new java.awt.Dimension(960, 26));
-        toolBarUsers.setPreferredSize(new java.awt.Dimension(960, 26));
-        toolBarUsers.add(filler1);
-
-        labelUsersCount.setForeground(new java.awt.Color(60, 63, 65));
-        labelUsersCount.setText("Número de alumnos");
-        labelUsersCount.setMaximumSize(new java.awt.Dimension(200, 16));
-        labelUsersCount.setMinimumSize(new java.awt.Dimension(200, 16));
-        labelUsersCount.setPreferredSize(new java.awt.Dimension(200, 16));
-        toolBarUsers.add(labelUsersCount);
-        toolBarUsers.add(filler2);
-
-        labelActiveUser.setFont(labelActiveUser.getFont().deriveFont(labelActiveUser.getFont().getStyle() | java.awt.Font.BOLD));
-        labelActiveUser.setForeground(new java.awt.Color(60, 63, 65));
-        labelActiveUser.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        labelActiveUser.setText("Usuario activo");
-        labelActiveUser.setFocusable(false);
-        labelActiveUser.setMaximumSize(new java.awt.Dimension(400, 16));
-        labelActiveUser.setMinimumSize(new java.awt.Dimension(400, 16));
-        labelActiveUser.setPreferredSize(new java.awt.Dimension(400, 16));
-        labelActiveUser.setRequestFocusEnabled(false);
-        labelActiveUser.setVerifyInputWhenFocusTarget(false);
-        toolBarUsers.add(labelActiveUser);
-        toolBarUsers.add(filler6);
-
-        buttonLogOut.setBackground(new java.awt.Color(175, 75, 75));
-        buttonLogOut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logout_icon.png"))); // NOI18N
-        buttonLogOut.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        buttonLogOut.setMaximumSize(new java.awt.Dimension(24, 24));
-        buttonLogOut.setMinimumSize(new java.awt.Dimension(24, 24));
-        buttonLogOut.setPreferredSize(new java.awt.Dimension(26, 26));
-        buttonLogOut.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonLogOutActionPerformed(evt);
-            }
-        });
-        toolBarUsers.add(buttonLogOut);
-        toolBarUsers.add(filler3);
-
-        add(toolBarUsers, java.awt.BorderLayout.PAGE_END);
-
-        panelEntramientos.setFocusable(false);
-        panelEntramientos.setLayout(new java.awt.BorderLayout());
-
         scrollPaneEntrenamientos.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPaneEntrenamientos.setPreferredSize(new java.awt.Dimension(480, 402));
 
@@ -346,7 +298,7 @@ public class TablesPanel extends javax.swing.JPanel {
             tableEntrenamientos.getColumnModel().getColumn(1).setPreferredWidth(240);
         }
 
-        panelEntramientos.add(scrollPaneEntrenamientos, java.awt.BorderLayout.CENTER);
+        jPanel1.add(scrollPaneEntrenamientos, java.awt.BorderLayout.CENTER);
 
         scrollPaneEjercicios.setBorder(null);
         scrollPaneEjercicios.setPreferredSize(new java.awt.Dimension(240, 402));
@@ -392,16 +344,26 @@ public class TablesPanel extends javax.swing.JPanel {
             tableEjercicios.getColumnModel().getColumn(0).setPreferredWidth(240);
         }
 
-        panelEntramientos.add(scrollPaneEjercicios, java.awt.BorderLayout.LINE_END);
+        jPanel1.add(scrollPaneEjercicios, java.awt.BorderLayout.LINE_END);
+
+        add(jPanel1, java.awt.BorderLayout.CENTER);
+
+        jPanel2.setMaximumSize(new java.awt.Dimension(2147483647, 90));
+        jPanel2.setMinimumSize(new java.awt.Dimension(960, 90));
+        jPanel2.setPreferredSize(new java.awt.Dimension(100, 90));
+        jPanel2.setLayout(new java.awt.BorderLayout());
 
         toolBarEntrenamientos.setBackground(new java.awt.Color(38, 40, 41));
         toolBarEntrenamientos.setRollover(true);
         toolBarEntrenamientos.setFocusable(false);
+        toolBarEntrenamientos.setMaximumSize(new java.awt.Dimension(33124, 64));
+        toolBarEntrenamientos.setMinimumSize(new java.awt.Dimension(357, 64));
         toolBarEntrenamientos.setPreferredSize(new java.awt.Dimension(100, 64));
         toolBarEntrenamientos.add(filler7);
 
-        buttonNewTask.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/btn_icons/NewTask.png"))); // NOI18N
+        buttonNewTask.setIcon(new oton.trainerhive.gui.util.SVGRenderer().getSVGIcon("/icons/task_new", 16, 16));
         buttonNewTask.setText("Asignar");
+        buttonNewTask.setToolTipText("Asignar nuevo entrenamiento al usuario");
         buttonNewTask.setFocusable(false);
         buttonNewTask.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         buttonNewTask.setPreferredSize(new java.awt.Dimension(72, 24));
@@ -413,8 +375,9 @@ public class TablesPanel extends javax.swing.JPanel {
         });
         toolBarEntrenamientos.add(buttonNewTask);
 
-        buttonEditTask.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/btn_icons/EditTask.png"))); // NOI18N
+        buttonEditTask.setIcon(new oton.trainerhive.gui.util.SVGRenderer().getSVGIcon("/icons/task_edit", 16, 16));
         buttonEditTask.setText("Modificar");
+        buttonEditTask.setToolTipText("Modificar entrenamiento");
         buttonEditTask.setEnabled(false);
         buttonEditTask.setFocusable(false);
         buttonEditTask.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -422,8 +385,9 @@ public class TablesPanel extends javax.swing.JPanel {
         buttonEditTask.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         toolBarEntrenamientos.add(buttonEditTask);
 
-        buttonRemoveTask.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/btn_icons/DeleteTask.png"))); // NOI18N
+        buttonRemoveTask.setIcon(new oton.trainerhive.gui.util.SVGRenderer().getSVGIcon("/icons/task_remove", 16, 16));
         buttonRemoveTask.setText("Quitar");
+        buttonRemoveTask.setToolTipText("Quitar entrenamiento a este usuario");
         buttonRemoveTask.setFocusable(false);
         buttonRemoveTask.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         buttonRemoveTask.setPreferredSize(new java.awt.Dimension(72, 24));
@@ -435,8 +399,9 @@ public class TablesPanel extends javax.swing.JPanel {
         });
         toolBarEntrenamientos.add(buttonRemoveTask);
 
-        buttonWatchTask.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/btn_icons/WatchWorkout.png"))); // NOI18N
+        buttonWatchTask.setIcon(new oton.trainerhive.gui.util.SVGRenderer().getSVGIcon("/icons/task_check", 16, 16));
         buttonWatchTask.setText("Corregir");
+        buttonWatchTask.setToolTipText("Corregir entrenamiento");
         buttonWatchTask.setEnabled(false);
         buttonWatchTask.setFocusable(false);
         buttonWatchTask.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -445,8 +410,9 @@ public class TablesPanel extends javax.swing.JPanel {
         toolBarEntrenamientos.add(buttonWatchTask);
         toolBarEntrenamientos.add(filler4);
 
-        buttonNewWorkout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/btn_icons/NewWorkout.png"))); // NOI18N
+        buttonNewWorkout.setIcon(new oton.trainerhive.gui.util.SVGRenderer().getSVGIcon("/icons/workout_new", 16, 16));
         buttonNewWorkout.setText("Crear");
+        buttonNewWorkout.setToolTipText("Crear un ejercicio nuevo");
         buttonNewWorkout.setEnabled(false);
         buttonNewWorkout.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         buttonNewWorkout.setPreferredSize(new java.awt.Dimension(72, 24));
@@ -458,16 +424,18 @@ public class TablesPanel extends javax.swing.JPanel {
         });
         toolBarEntrenamientos.add(buttonNewWorkout);
 
-        buttonEditWorkout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/btn_icons/EditWorkout.png"))); // NOI18N
+        buttonEditWorkout.setIcon(new oton.trainerhive.gui.util.SVGRenderer().getSVGIcon("/icons/workout_edit", 16, 16));
         buttonEditWorkout.setText("Editar");
+        buttonEditWorkout.setToolTipText("Editar ejercicio");
         buttonEditWorkout.setEnabled(false);
         buttonEditWorkout.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         buttonEditWorkout.setPreferredSize(new java.awt.Dimension(72, 24));
         buttonEditWorkout.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         toolBarEntrenamientos.add(buttonEditWorkout);
 
-        buttonEditWorkout1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/btn_icons/RemoveWorkout.png"))); // NOI18N
+        buttonEditWorkout1.setIcon(new oton.trainerhive.gui.util.SVGRenderer().getSVGIcon("/icons/workout_remove", 16, 16));
         buttonEditWorkout1.setText("Borrar");
+        buttonEditWorkout1.setToolTipText("Borrar ejercicio");
         buttonEditWorkout1.setEnabled(false);
         buttonEditWorkout1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         buttonEditWorkout1.setPreferredSize(new java.awt.Dimension(72, 24));
@@ -475,9 +443,54 @@ public class TablesPanel extends javax.swing.JPanel {
         toolBarEntrenamientos.add(buttonEditWorkout1);
         toolBarEntrenamientos.add(filler5);
 
-        panelEntramientos.add(toolBarEntrenamientos, java.awt.BorderLayout.PAGE_END);
+        jPanel2.add(toolBarEntrenamientos, java.awt.BorderLayout.PAGE_START);
 
-        add(panelEntramientos, java.awt.BorderLayout.CENTER);
+        toolBarUsers.setBackground(new java.awt.Color(99, 101, 105));
+        toolBarUsers.setRollover(true);
+        toolBarUsers.setMaximumSize(new java.awt.Dimension(960, 26));
+        toolBarUsers.setMinimumSize(new java.awt.Dimension(960, 26));
+        toolBarUsers.setPreferredSize(new java.awt.Dimension(960, 26));
+        toolBarUsers.add(filler1);
+
+        labelUsersCount.setForeground(new java.awt.Color(60, 63, 65));
+        labelUsersCount.setText("Número de alumnos");
+        labelUsersCount.setMaximumSize(new java.awt.Dimension(200, 16));
+        labelUsersCount.setMinimumSize(new java.awt.Dimension(200, 16));
+        labelUsersCount.setPreferredSize(new java.awt.Dimension(200, 16));
+        toolBarUsers.add(labelUsersCount);
+        toolBarUsers.add(filler2);
+
+        labelActiveUser.setFont(labelActiveUser.getFont().deriveFont(labelActiveUser.getFont().getStyle() | java.awt.Font.BOLD));
+        labelActiveUser.setForeground(new java.awt.Color(60, 63, 65));
+        labelActiveUser.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        labelActiveUser.setText("Usuario activo");
+        labelActiveUser.setFocusable(false);
+        labelActiveUser.setMaximumSize(new java.awt.Dimension(400, 16));
+        labelActiveUser.setMinimumSize(new java.awt.Dimension(400, 16));
+        labelActiveUser.setPreferredSize(new java.awt.Dimension(400, 16));
+        labelActiveUser.setRequestFocusEnabled(false);
+        labelActiveUser.setVerifyInputWhenFocusTarget(false);
+        toolBarUsers.add(labelActiveUser);
+        toolBarUsers.add(filler6);
+
+        buttonLogOut.setBackground(new java.awt.Color(175, 75, 75));
+        buttonLogOut.setIcon(new oton.trainerhive.gui.util.SVGRenderer().getSVGIcon("/icons/logout", 10, 10));
+        buttonLogOut.setToolTipText("Cerrar sesión");
+        buttonLogOut.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        buttonLogOut.setMaximumSize(new java.awt.Dimension(24, 24));
+        buttonLogOut.setMinimumSize(new java.awt.Dimension(24, 24));
+        buttonLogOut.setPreferredSize(new java.awt.Dimension(24, 26));
+        buttonLogOut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonLogOutActionPerformed(evt);
+            }
+        });
+        toolBarUsers.add(buttonLogOut);
+        toolBarUsers.add(filler3);
+
+        jPanel2.add(toolBarUsers, java.awt.BorderLayout.PAGE_END);
+
+        add(jPanel2, java.awt.BorderLayout.PAGE_END);
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonLogOutActionPerformed
@@ -523,9 +536,9 @@ public class TablesPanel extends javax.swing.JPanel {
     private javax.swing.Box.Filler filler6;
     private javax.swing.Box.Filler filler7;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel labelActiveUser;
     private javax.swing.JLabel labelUsersCount;
-    private javax.swing.JPanel panelEntramientos;
     private javax.swing.JScrollPane scrollPaneAlumnos;
     private javax.swing.JScrollPane scrollPaneEjercicios;
     private javax.swing.JScrollPane scrollPaneEntrenamientos;

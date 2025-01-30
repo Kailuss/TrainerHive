@@ -6,6 +6,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import oton.trainerhive.dto.User;
 import oton.trainerhive.gui.util.UIConstants;
+import oton.trainerhive.gui.util.SVGRenderer;
 
 /**
  *
@@ -44,10 +45,10 @@ public final class MainFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setFocusable(false);
-        setMinimumSize(new java.awt.Dimension(1280, 900));
+        setMinimumSize(new java.awt.Dimension(900, 600));
         setName("mainFrame"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(1280, 900));
-        setSize(new java.awt.Dimension(1024, 900));
+        setPreferredSize(new java.awt.Dimension(1024, 800));
+        setSize(new java.awt.Dimension(1024, 800));
 
         menuBarMain.setBorder(null);
         menuBarMain.setBorderPainted(false);
@@ -56,7 +57,7 @@ public final class MainFrame extends javax.swing.JFrame {
         menuBarMain.setMinimumSize(new java.awt.Dimension(164, 30));
         menuBarMain.setPreferredSize(new java.awt.Dimension(164, 30));
 
-        menuTH.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/TrainerHiveLogo16.png"))); // NOI18N
+        menuTH.setIcon(new oton.trainerhive.gui.util.SVGRenderer().getSVGIcon("/images/logo", 12, 12));
         menuTH.setText("Trainer Hive");
         menuTH.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
 

@@ -98,12 +98,13 @@ public class LoginDialog extends javax.swing.JDialog {
         setSize(new java.awt.Dimension(300, 360));
 
         logoLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        logoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/TrainerHiveLogo64.png"))); // NOI18N
+        logoLabel.setIcon(new oton.trainerhive.gui.util.SVGRenderer().getSVGIcon("/images/logo", 40, 40));
         logoLabel.setAlignmentX(0.5F);
         logoLabel.setFocusable(false);
-        logoLabel.setMaximumSize(new java.awt.Dimension(300, 64));
-        logoLabel.setMinimumSize(new java.awt.Dimension(300, 64));
-        logoLabel.setPreferredSize(new java.awt.Dimension(300, 64));
+        logoLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        logoLabel.setMaximumSize(new java.awt.Dimension(200, 64));
+        logoLabel.setMinimumSize(new java.awt.Dimension(200, 64));
+        logoLabel.setPreferredSize(new java.awt.Dimension(200, 64));
 
         userField.setText("a@b.c");
         userField.setMaximumSize(new java.awt.Dimension(200, 36));
@@ -174,12 +175,12 @@ public class LoginDialog extends javax.swing.JDialog {
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(showPasswordCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(logoLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(passwordField, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
                     .addComponent(loginButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(userField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(loginErrorLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(resetPasswordLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(resetPasswordLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(logoLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(35, 35, 35))
         );
         layout.setVerticalGroup(

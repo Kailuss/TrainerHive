@@ -1,5 +1,7 @@
 package oton.trainerhive.gui;
 
+import oton.trainerhive.gui.util.SVGRenderer;
+
 /**
  *
  * @author Kailuss
@@ -25,12 +27,14 @@ public class LoginPanel extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(960, 597));
 
         labelLogoImg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelLogoImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logoTHanimado.gif"))); // NOI18N
+        labelLogoImg.setIcon(new oton.trainerhive.gui.util.SVGRenderer().getSVGIcon("/images/logo", 72,72));
         labelLogoImg.setAlignmentX(0.5F);
+        labelLogoImg.setPreferredSize(new java.awt.Dimension(0, 128));
 
         labelLogo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logoTHtitle.png"))); // NOI18N
+        labelLogo.setIcon(new oton.trainerhive.gui.util.SVGRenderer().getSVGIcon("/images/trainerhive", 157, 22));
         labelLogo.setAlignmentX(0.5F);
+        labelLogo.setPreferredSize(new java.awt.Dimension(240, 35));
 
         buttonLogin.setBackground(new java.awt.Color(99, 101, 105));
         buttonLogin.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -67,26 +71,27 @@ public class LoginPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(319, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(labelLogoImg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(labelLogo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(buttonLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(buttonWebsite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(319, Short.MAX_VALUE))
+                .addContainerGap(360, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelLogo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(labelLogoImg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(buttonLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
+                        .addComponent(buttonWebsite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(360, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(144, Short.MAX_VALUE)
-                .addComponent(labelLogoImg)
-                .addGap(0, 0, 0)
-                .addComponent(labelLogo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
+                .addContainerGap(113, Short.MAX_VALUE)
+                .addComponent(labelLogoImg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(labelLogo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 140, Short.MAX_VALUE)
                 .addComponent(buttonLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(56, 56, 56)
+                .addGap(41, 41, 41)
                 .addComponent(buttonWebsite)
-                .addGap(64, 64, 64))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

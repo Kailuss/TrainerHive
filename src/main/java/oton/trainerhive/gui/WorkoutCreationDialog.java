@@ -17,6 +17,7 @@ import oton.trainerhive.dto.Exercise;
 import oton.trainerhive.dto.Workout;
 import oton.trainerhive.dto.User;
 import oton.trainerhive.gui.tablemodels.ExercisesSimpleTableModel;
+import oton.trainerhive.gui.util.SVGRenderer;
 
 /**
  *
@@ -44,7 +45,7 @@ public final class WorkoutCreationDialog extends javax.swing.JDialog {
 
 	initComponents();
 	setTitle("Nueva actividad para " + this.selectedUser.getName());
-	setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/btn_icons/NewWorkout16.png")));
+	//setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/btn_icons/NewWorkout16.png")));
 	initializeDialog();
     }
 
@@ -269,8 +270,9 @@ public final class WorkoutCreationDialog extends javax.swing.JDialog {
         jMenu1.setText("jMenu1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Nueva actividad para Bart");
+        setTitle("Nueva actividad");
         setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        setIconImage(new oton.trainerhive.gui.util.SVGRenderer().getSVGImage("/icons/workout_new", 16, 16));
         setMinimumSize(new java.awt.Dimension(400, 400));
         setModal(true);
         setResizable(false);
@@ -321,7 +323,7 @@ public final class WorkoutCreationDialog extends javax.swing.JDialog {
         }
 
         buttonMoveUp.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
-        buttonMoveUp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/btn_icons/MoveUp.png"))); // NOI18N
+        buttonMoveUp.setIcon(new oton.trainerhive.gui.util.SVGRenderer().getSVGIcon("/icons/up", 16, 16));
         buttonMoveUp.setEnabled(false);
         buttonMoveUp.setFocusable(false);
         buttonMoveUp.setMaximumSize(new java.awt.Dimension(22, 22));
@@ -334,7 +336,7 @@ public final class WorkoutCreationDialog extends javax.swing.JDialog {
         });
 
         buttonMoveDown.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
-        buttonMoveDown.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/btn_icons/MoveDown.png"))); // NOI18N
+        buttonMoveDown.setIcon(new oton.trainerhive.gui.util.SVGRenderer().getSVGIcon("/icons/down", 16, 16));
         buttonMoveDown.setEnabled(false);
         buttonMoveDown.setFocusable(false);
         buttonMoveDown.addActionListener(new java.awt.event.ActionListener() {
@@ -395,7 +397,7 @@ public final class WorkoutCreationDialog extends javax.swing.JDialog {
         comboBoxExercises.setPreferredSize(new java.awt.Dimension(188, 27));
 
         buttonRemoveExercise.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
-        buttonRemoveExercise.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/btn_icons/RemoveExerciseFromList.png"))); // NOI18N
+        buttonRemoveExercise.setIcon(new oton.trainerhive.gui.util.SVGRenderer().getSVGIcon("/icons/remove", 16, 16));
         buttonRemoveExercise.setEnabled(false);
         buttonRemoveExercise.setFocusable(false);
         buttonRemoveExercise.setMaximumSize(new java.awt.Dimension(22, 22));
