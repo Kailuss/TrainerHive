@@ -10,9 +10,14 @@ TrainerHive es una aplicación GUI basada en Java Swing diseñada para permitir 
 
 ## Capturas de Pantalla
 
-- **Ventana Principal**: La ventana inicial muestra el logo de la empresa, el enlace a la web y el icono de login.
-- **Diálogo de Login**: Un diálogo modal para la autenticación del instructor.
-- **Gestión de Entrenamientos**: Una ventana para crear, modificar y eliminar entrenamientos.
+![Login](./screenshots/screenshot_start.jpg)
+**Ventana Principal**: La ventana inicial muestra el logo de la empresa, el enlace a la web y el icono de login.
+![Login](./screenshots/screenshot_login.jpg)
+**Diálogo de Login**: Un diálogo modal para la autenticación del instructor.
+![Login](./screenshots/screenshot_tables.jpg)
+**Vista de tablas**: Ventana que muestra los alumnos registrados con el instructor y los entrenamientos asignados.
+![Login](./screenshots/screenshot_workout.jpg)
+**Gestión de Entrenamientos**: Una ventana para crear, modificar y eliminar entrenamientos.
 
 ---
 
