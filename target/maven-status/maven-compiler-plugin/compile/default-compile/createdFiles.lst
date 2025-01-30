@@ -3,6 +3,7 @@ oton\trainerhive\gui\MainFrame$5.class
 oton\trainerhive\gui\LoginDialog$1.class
 oton\trainerhive\gui\util\UIConstants.class
 oton\trainerhive\gui\WorkoutCreationDialog$5.class
+oton\trainerhive\gui\LoginPanel$3.class
 oton\trainerhive\gui\LoginPanel.class
 oton\trainerhive\gui\LoginDialog$4.class
 oton\trainerhive\gui\TablesPanel$7.class
@@ -49,4 +50,5 @@ oton\trainerhive\gui\WorkoutCreationDialog$4.class
 oton\trainerhive\gui\LoginDialog$3.class
 oton\trainerhive\gui\tablemodels\WorkoutsTableModel.class
 oton\trainerhive\gui\MainFrame$2.class
+oton\trainerhive\gui\TablesPanel$8.class
 oton\trainerhive\gui\util\FontManager.class

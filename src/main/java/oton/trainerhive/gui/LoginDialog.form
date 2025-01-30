@@ -147,6 +147,7 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Iniciar sesi&#xf3;n"/>
         <Property name="toolTipText" type="java.lang.String" value=""/>
+        <Property name="borderPainted" type="boolean" value="false"/>
         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
           <Color id="Cursor de Mano"/>
         </Property>
@@ -173,7 +174,7 @@
     <Component class="javax.swing.JLabel" name="loginErrorLabel">
       <Properties>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="33" green="cc" red="ff" type="rgb"/>
+          <Color blue="60" green="d7" red="f5" type="rgb"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -192,7 +193,7 @@
         <Property name="text" type="java.lang.String" value="Mostrar contrase&#xf1;a"/>
         <Property name="horizontalAlignment" type="int" value="11"/>
         <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-          <ComponentRef name="loginButton"/>
+          <ComponentRef name="userField"/>
         </Property>
       </Properties>
       <Events>
@@ -201,8 +202,11 @@
     </Component>
     <Component class="javax.swing.JLabel" name="resetPasswordLabel">
       <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="80" green="80" red="80" type="rgb"/>
+        </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="He olvidado mi contrase&#xf1;a"/>
+        <Property name="text" type="java.lang.String" value="(He olvidado mi contrase&#xf1;a)"/>
         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
           <Color id="Cursor de Mano"/>
         </Property>

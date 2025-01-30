@@ -55,7 +55,6 @@ public final class MainFrame extends javax.swing.JFrame {
         setFocusable(false);
         setMinimumSize(new java.awt.Dimension(1280, 720));
         setName("mainFrame"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(1280, 720));
         setSize(new java.awt.Dimension(1280, 720));
 
         menuBarMain.setBorder(null);

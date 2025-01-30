@@ -48,7 +48,8 @@ public class TablesPanel extends javax.swing.JPanel {
 
     // Bordes de los paneles.
     private void configureTablePanelBorders() {
-	scrollPaneAlumnos.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, UIConstants.GRIS_OSCURO));
+	scrollPaneAlumnos.setBorder(BorderFactory.createEmptyBorder());
+	westPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, UIConstants.GRIS_OSCURO));
 	scrollPaneEntrenamientos.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, UIConstants.GRIS_MEDIO));
 	scrollPaneEjercicios.setBorder(BorderFactory.createEmptyBorder());
     }
@@ -179,9 +180,12 @@ public class TablesPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        westPanel = new javax.swing.JPanel();
         scrollPaneAlumnos = new javax.swing.JScrollPane();
         tableAlumnos = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        eastPanel = new javax.swing.JPanel();
         scrollPaneEntrenamientos = new javax.swing.JScrollPane();
         tableEntrenamientos = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
@@ -201,6 +205,7 @@ public class TablesPanel extends javax.swing.JPanel {
         filler5 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 10));
         toolBarUsers = new javax.swing.JToolBar();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(5, 0), new java.awt.Dimension(8, 0), new java.awt.Dimension(5, 32767));
+        filler8 = new javax.swing.Box.Filler(new java.awt.Dimension(5, 0), new java.awt.Dimension(8, 0), new java.awt.Dimension(5, 32767));
         labelUsersCount = new javax.swing.JLabel();
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         labelActiveUser = new javax.swing.JLabel();
@@ -210,12 +215,13 @@ public class TablesPanel extends javax.swing.JPanel {
 
         setLayout(new java.awt.BorderLayout());
 
-        jPanel1.setLayout(new java.awt.BorderLayout());
+        westPanel.setLayout(new java.awt.BorderLayout());
 
         scrollPaneAlumnos.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPaneAlumnos.setAutoscrolls(true);
         scrollPaneAlumnos.setPreferredSize(new java.awt.Dimension(240, 402));
 
+        tableAlumnos.setAutoCreateRowSorter(true);
         tableAlumnos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -255,11 +261,51 @@ public class TablesPanel extends javax.swing.JPanel {
             tableAlumnos.getColumnModel().getColumn(0).setPreferredWidth(239);
         }
 
-        jPanel1.add(scrollPaneAlumnos, java.awt.BorderLayout.WEST);
+        westPanel.add(scrollPaneAlumnos, java.awt.BorderLayout.NORTH);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new oton.trainerhive.gui.util.SVGRenderer().getSVGIcon("/icons/gauge_empty", 24, 24));
+        jLabel1.setText("Tu Trainer Score es muy bajo");
+        jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jLabel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 16, 3, 16));
+        jLabel1.setFocusable(false);
+        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jLabel1.setMaximumSize(new java.awt.Dimension(239, 64));
+        jLabel1.setMinimumSize(new java.awt.Dimension(239, 64));
+        jLabel1.setName(""); // NOI18N
+        jLabel1.setPreferredSize(new java.awt.Dimension(239, 64));
+        jLabel1.setRequestFocusEnabled(false);
+        jLabel1.setVerifyInputWhenFocusTarget(false);
+        jLabel1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        westPanel.add(jLabel1, java.awt.BorderLayout.CENTER);
+
+        jButton1.setBackground(new java.awt.Color(215, 245, 96));
+        jButton1.setForeground(new java.awt.Color(60, 63, 65));
+        jButton1.setText("<html><div align='center'>Aumenta tus visitas con <b>TRAINER+</b> ¡Haz crecer tu colmena por 3'99€!*</div></html>");
+        jButton1.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 16, 3, 16));
+        jButton1.setBorderPainted(false);
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setMargin(new java.awt.Insets(3, 16, 3, 16));
+        jButton1.setMaximumSize(new java.awt.Dimension(240, 92));
+        jButton1.setMinimumSize(new java.awt.Dimension(240, 92));
+        jButton1.setPreferredSize(new java.awt.Dimension(240, 92));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        westPanel.add(jButton1, java.awt.BorderLayout.SOUTH);
+
+        add(westPanel, java.awt.BorderLayout.WEST);
+
+        eastPanel.setLayout(new java.awt.BorderLayout());
 
         scrollPaneEntrenamientos.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPaneEntrenamientos.setPreferredSize(new java.awt.Dimension(480, 402));
 
+        tableEntrenamientos.setAutoCreateRowSorter(true);
         tableEntrenamientos.setBackground(new java.awt.Color(60, 63, 65));
         tableEntrenamientos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -304,7 +350,7 @@ public class TablesPanel extends javax.swing.JPanel {
             tableEntrenamientos.getColumnModel().getColumn(1).setPreferredWidth(240);
         }
 
-        jPanel1.add(scrollPaneEntrenamientos, java.awt.BorderLayout.CENTER);
+        eastPanel.add(scrollPaneEntrenamientos, java.awt.BorderLayout.CENTER);
 
         jPanel3.setLayout(new java.awt.BorderLayout());
 
@@ -354,9 +400,9 @@ public class TablesPanel extends javax.swing.JPanel {
 
         jPanel3.add(scrollPaneEjercicios, java.awt.BorderLayout.LINE_END);
 
-        jPanel1.add(jPanel3, java.awt.BorderLayout.EAST);
+        eastPanel.add(jPanel3, java.awt.BorderLayout.EAST);
 
-        add(jPanel1, java.awt.BorderLayout.CENTER);
+        add(eastPanel, java.awt.BorderLayout.CENTER);
 
         jPanel2.setMaximumSize(new java.awt.Dimension(2147483647, 90));
         jPanel2.setMinimumSize(new java.awt.Dimension(960, 90));
@@ -450,7 +496,7 @@ public class TablesPanel extends javax.swing.JPanel {
         toolBarEntrenamientos.add(buttonEditWorkout1);
         toolBarEntrenamientos.add(filler5);
 
-        jPanel2.add(toolBarEntrenamientos, java.awt.BorderLayout.PAGE_START);
+        jPanel2.add(toolBarEntrenamientos, java.awt.BorderLayout.CENTER);
 
         toolBarUsers.setBackground(new java.awt.Color(99, 101, 105));
         toolBarUsers.setRollover(true);
@@ -458,6 +504,7 @@ public class TablesPanel extends javax.swing.JPanel {
         toolBarUsers.setMinimumSize(new java.awt.Dimension(960, 26));
         toolBarUsers.setPreferredSize(new java.awt.Dimension(960, 26));
         toolBarUsers.add(filler1);
+        toolBarUsers.add(filler8);
 
         labelUsersCount.setForeground(new java.awt.Color(60, 63, 65));
         labelUsersCount.setText("Número de alumnos");
@@ -526,6 +573,10 @@ public class TablesPanel extends javax.swing.JPanel {
 	}
     }//GEN-LAST:event_buttonRemoveTaskActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonEditTask;
     private javax.swing.JButton buttonEditWorkout;
@@ -535,6 +586,7 @@ public class TablesPanel extends javax.swing.JPanel {
     private javax.swing.JButton buttonNewWorkout;
     private javax.swing.JButton buttonRemoveTask;
     private javax.swing.JButton buttonWatchTask;
+    private javax.swing.JPanel eastPanel;
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler2;
     private javax.swing.Box.Filler filler3;
@@ -542,7 +594,9 @@ public class TablesPanel extends javax.swing.JPanel {
     private javax.swing.Box.Filler filler5;
     private javax.swing.Box.Filler filler6;
     private javax.swing.Box.Filler filler7;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.Box.Filler filler8;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel labelActiveUser;
@@ -555,5 +609,6 @@ public class TablesPanel extends javax.swing.JPanel {
     private javax.swing.JTable tableEntrenamientos;
     private javax.swing.JToolBar toolBarEntrenamientos;
     private javax.swing.JToolBar toolBarUsers;
+    private javax.swing.JPanel westPanel;
     // End of variables declaration//GEN-END:variables
 }

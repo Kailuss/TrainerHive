@@ -137,6 +137,7 @@ public class LoginDialog extends javax.swing.JDialog {
         loginButton.setForeground(new java.awt.Color(255, 204, 51));
         loginButton.setText("Iniciar sesión");
         loginButton.setToolTipText("");
+        loginButton.setBorderPainted(false);
         loginButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         loginButton.setMaximumSize(new java.awt.Dimension(200, 36));
         loginButton.setMinimumSize(new java.awt.Dimension(200, 36));
@@ -148,7 +149,7 @@ public class LoginDialog extends javax.swing.JDialog {
             }
         });
 
-        loginErrorLabel.setForeground(new java.awt.Color(255, 204, 51));
+        loginErrorLabel.setForeground(new java.awt.Color(245, 215, 96));
         loginErrorLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         loginErrorLabel.setMaximumSize(new java.awt.Dimension(200, 16));
         loginErrorLabel.setMinimumSize(new java.awt.Dimension(200, 16));
@@ -156,15 +157,16 @@ public class LoginDialog extends javax.swing.JDialog {
 
         showPasswordCheckBox.setText("Mostrar contraseña");
         showPasswordCheckBox.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        showPasswordCheckBox.setNextFocusableComponent(loginButton);
+        showPasswordCheckBox.setNextFocusableComponent(userField);
         showPasswordCheckBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 showPasswordCheckBoxActionPerformed(evt);
             }
         });
 
+        resetPasswordLabel.setForeground(new java.awt.Color(128, 128, 128));
         resetPasswordLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        resetPasswordLabel.setText("He olvidado mi contraseña");
+        resetPasswordLabel.setText("(He olvidado mi contraseña)");
         resetPasswordLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         resetPasswordLabel.setMaximumSize(new java.awt.Dimension(200, 16));
         resetPasswordLabel.setMinimumSize(new java.awt.Dimension(200, 16));
