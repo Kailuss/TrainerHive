@@ -10,8 +10,11 @@ import oton.trainerhive.gui.util.FontManager;
 import oton.trainerhive.gui.util.UIConstants;
 
 /**
+ * Frame principal de la aplicación TrainerHive. Actúa como contenedor principal para los diferentes paneles de la interfaz de usuario y gestiona la navegación entre ellos. También mantiene el estado de la sesión del usuario.
  *
  * @author Alfonso Otón
+ * @version 1.2
+ * @since 2025
  */
 public final class MainFrame extends javax.swing.JFrame {
 
@@ -21,17 +24,22 @@ public final class MainFrame extends javax.swing.JFrame {
     private LoginPanel panel_LogIn;				// Panel de bienvenida
     private TablesPanel panel_Tables;				// Panel de usuarios
 
-    // Constructor
+    /**
+     * Constructor del frame principal. Inicializa los componentes de la UI, configura la ventana principal, crea el renderizador de celdas para tablas y carga el panel de inicio de sesión por defecto.
+     */
     public MainFrame() {
 	initComponents();
 	this.cellRenderer = createTableCellRenderer();		// Configura el formato que tendran las celdas
 	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	// Deja de ejecutar el programa al cerrar la ventana
 	this.setLocationRelativeTo(null);			// Centra el jFrame en pantalla
 	setupUI();
-	swapPanel(PanelType.LOGIN);				// Carga el panel LogIn
+	swapPanel(PanelType.LOGIN);				// Carga el panel LogIn (Asumiendo la existencia de PanelType.LOGIN)
 
     }
 
+    /**
+     * Configuración inicial de la interfaz de usuario del frame. Aplica fuentes a los componentes del frame.
+     */
     private void setupUI() {
 	FontManager.applyFontToContainer(this, 13f, 13f);
 	FontManager.applyFont(menuTH, "bold", 13);

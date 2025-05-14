@@ -1,4 +1,5 @@
 package oton.trainerhive.gui.util;
+
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -13,8 +14,30 @@ import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.geometry.Positions;
 import oton.trainerhive.dto.User;
 
-public class UserAvatarGenerator {
-    // Array de colores predefinidos para los avatares por defecto
+/**
+ * Generador de avatares de usuario para la aplicación TrainerHive.
+ * Proporciona funcionalidad para crear, modificar y almacenar avatares,
+ * incluyendo manejo de imágenes personalizadas y generación de avatares por defecto.
+ * 
+ * <p>Características principales:</p>
+ * <ul>
+ *   <li>Generación de avatares a partir de fotos de usuario</li>
+ *   <li>Creación de avatares por defecto con colores aleatorios</li>
+ *   <li>Aplicación de máscaras hexagonales</li>
+ *   <li>Escalado automático según la configuración HiDPI</li>
+ *   <li>Almacenamiento en caché local</li>
+ * </ul>
+ * 
+ * @author Alfonso Otón
+ * @version 1.2
+ * @since 2025
+ */
+public final class UserAvatarGenerator {
+    
+    /**
+     * Paleta de colores predefinidos para avatares por defecto.
+     * Colores vivos y accesibles que garantizan buen contraste.
+     */
     private static final Color[] AVATAR_COLORS = {
         new Color(52, 152, 219),   // Azul
         new Color(231, 76, 60),    // Rojo
@@ -34,170 +57,226 @@ public class UserAvatarGenerator {
         new Color(127, 140, 141)   // Gris
     };
     
-    // Objeto Random para generar índices aleatorios
+    /** Generador de números aleatorios para selección de colores */
     private static final Random random = new Random();
     
     /**
-     * Crea un avatar de usuario y lo guarda en la caché del sistema. Este código ha sido creado siguiendo las instrucciones del módulo Thumbnailator.
-     *
-     * @param user Objeto Usuario con la imagen en formato de bytes.
-     * @param avatarSize Tamaño deseado del avatar en píxeles.
-     * @param applyMask Indica si se debe aplicar una máscara hexagonal a la imagen.
+     * Constructor privado para prevenir instanciación.
+     * Esta clase solo debe contener métodos estáticos.
+     */
+    private UserAvatarGenerator() {
+        throw new AssertionError("Clase utilitaria no debe ser instanciada");
+    }
+    
+    /**
+     * Crea y almacena un avatar para el usuario especificado.
+     * 
+     * @param user Usuario para el que generar el avatar
+     * @param avatarSize Tamaño deseado del avatar en píxeles (sin escalado HiDPI)
+     * @param applyMask Indica si se aplica máscara hexagonal (true) o se mantiene rectangular (false)
+     * @throws IllegalArgumentException Si el tamaño del avatar es menor que 1
      */
     public static void createUserAvatar(User user, int avatarSize, boolean applyMask) {
-        // Obtiene la escala de UI del sistema (Windows)
-        String systemUIScaleProperty = System.getProperty("sun.java2d.uiScale", "1.0"); // Escala al 100% por defecto
-        float systemUIScale = Float.parseFloat(systemUIScaleProperty);
-        int finalAvatarSize = (int) (avatarSize * systemUIScale); // Tamaño final del avatar
+        if (avatarSize < 1) {
+            throw new IllegalArgumentException("El tamaño del avatar debe ser al menos 1 píxel");
+        }
+        
+        // Ajustar tamaño según escala HiDPI
+        float systemUIScale = Float.parseFloat(System.getProperty("sun.java2d.uiScale", "1.0"));
+        int finalAvatarSize = (int) (avatarSize * systemUIScale);
+        
         try {
-            // Define la ruta de la caché
-            String systemUserHome = System.getProperty("user.home");
-            File cacheDir = new File(systemUserHome, "AppData/Local/TrainerHive/cache");
+            File outputFile = prepareOutputFile(user);
+            BufferedImage originalImage = createBaseImage(user, finalAvatarSize);
             
-            // Verifica si el nombre del archivo de foto es null y asigna un nombre por defecto si es necesario
-            String photoFilename = user.getPhotoFilename();
-            if (photoFilename == null || photoFilename.isEmpty()) {
-                photoFilename = "default_user_" + user.getId() + ".png";
-            }
-            
-            File outputFile = new File(cacheDir, photoFilename);
-            if (!cacheDir.exists()) {
-                cacheDir.mkdirs(); // Crea la carpeta de caché si no existe
-            }
-            
-            BufferedImage originalImage;
-            boolean isDefaultAvatar = false;
-            
-            // Verifica si el usuario tiene una foto
-            if (user.getPhoto() != null && user.getPhoto().length > 0) {
-                // Carga y ajusta la imagen de usuario
-                ByteArrayInputStream bis = new ByteArrayInputStream(user.getPhoto());
-                originalImage = Thumbnails.of(bis)
-                        .size(finalAvatarSize, finalAvatarSize)
-                        .crop(Positions.CENTER)
-                        .outputQuality(1.0)
-                        .asBufferedImage();
-            } else {
-                // Carga y ajusta la imagen predeterminada
-                InputStream defaultImageStream = UserAvatarGenerator.class.getClassLoader().getResourceAsStream("default-avatar.jpg");
-                isDefaultAvatar = true;
-                
-                if (defaultImageStream == null) {
-                    System.err.println("No se pudo cargar la imagen por defecto: default-avatar.jpg");
-                    // Si no podemos cargar la imagen predeterminada, creamos una imagen en blanco
-                    originalImage = createColoredBackgroundImage(finalAvatarSize);
-                } else {
-                    try {
-                        originalImage = Thumbnails.of(defaultImageStream)
-                                .size(finalAvatarSize, finalAvatarSize)
-                                .crop(Positions.CENTER)
-                                .outputQuality(1.0)
-                                .asBufferedImage();
-                    } catch (Exception e) {
-                        System.err.println("Error al procesar la imagen predeterminada: " + e.getMessage());
-                        // Si hay error al procesar, creamos una imagen con color aleatorio
-                        originalImage = createColoredBackgroundImage(finalAvatarSize);
-                    }
-                }
-                
-                // Aplicamos un tinte de color aleatorio si es un avatar por defecto
-                if (isDefaultAvatar) {
-                    originalImage = applyColorTint(originalImage, getRandomAvatarColor(user.getId()));
-                }
-            }
-            
-            InputStream maskFile = UserAvatarGenerator.class.getClassLoader().getResourceAsStream("images/hexMask.png");
-            
-            // Aplica la máscara si es necesario
-            if (applyMask && maskFile != null) {
-                // Carga y escala la máscara
-                BufferedImage mask = Thumbnails.of(ImageIO.read(maskFile))
-                        .size(finalAvatarSize, finalAvatarSize)
-                        .asBufferedImage();
-                BufferedImage hexThumbnail = applyMask(originalImage, mask);
-                ImageIO.write(hexThumbnail, "PNG", outputFile);
+            // Aplicar máscara si está configurado
+            if (applyMask) {
+                BufferedImage maskedImage = applyHexagonalMask(originalImage, finalAvatarSize);
+                ImageIO.write(maskedImage, "PNG", outputFile);
             } else {
                 ImageIO.write(originalImage, "PNG", outputFile);
             }
         } catch (IOException ex) {
-            System.err.println("Error al guardar la foto en caché: " + ex);
+            System.err.println("Error al generar avatar: " + ex.getMessage());
         }
     }
     
     /**
-     * Crea una imagen de fondo con un color aleatorio
+     * Prepara el archivo de salida para el avatar.
      * 
-     * @param size Tamaño de la imagen a crear
-     * @return BufferedImage con el fondo coloreado
+     * @param user Usuario para el que se genera el avatar
+     * @return Archivo destino para el avatar
+     * @throws IOException Si no se puede crear el directorio de caché
      */
-    private static BufferedImage createColoredBackgroundImage(int size) {
+    private static File prepareOutputFile(User user) throws IOException {
+        String cachePath = System.getProperty("user.home") + "/AppData/Local/TrainerHive/cache";
+        File cacheDir = new File(cachePath);
+        
+        if (!cacheDir.exists()) {
+            cacheDir.mkdirs();
+        }
+        
+        String filename = (user.getPhotoFilename() == null || user.getPhotoFilename().isEmpty())
+            ? "default_user_" + user.getId() + ".png"
+            : user.getPhotoFilename();
+            
+        return new File(cacheDir, filename);
+    }
+    
+    /**
+     * Crea la imagen base para el avatar.
+     * 
+     * @param user Usuario para el que se genera el avatar
+     * @param size Tamaño final de la imagen
+     * @return Imagen procesada lista para aplicar máscara
+     */
+    private static BufferedImage createBaseImage(User user, int size) throws IOException {
+        if (user.getPhoto() != null && user.getPhoto().length > 0) {
+            return processUserPhoto(user.getPhoto(), size);
+        } else {
+            return createDefaultAvatar(user.getId(), size);
+        }
+    }
+    
+    /**
+     * Procesa la foto de usuario subida.
+     * 
+     * @param photoData Bytes de la foto del usuario
+     * @param size Tamaño deseado de salida
+     * @return Imagen redimensionada y centrada
+     * @throws IOException Si hay error al procesar la imagen
+     */
+    private static BufferedImage processUserPhoto(byte[] photoData, int size) throws IOException {
+        return Thumbnails.of(new ByteArrayInputStream(photoData))
+                .size(size, size)
+                .crop(Positions.CENTER)
+                .outputQuality(1.0)
+                .asBufferedImage();
+    }
+    
+    /**
+     * Crea un avatar por defecto cuando el usuario no tiene foto.
+     * 
+     * @param userId ID del usuario para generación determinista de color
+     * @param size Tamaño deseado del avatar
+     * @return Avatar generado con color único
+     */
+    private static BufferedImage createDefaultAvatar(long userId, int size) throws IOException {
+        BufferedImage defaultImage;
+        
+        try (InputStream defaultImageStream = UserAvatarGenerator.class
+                .getClassLoader()
+                .getResourceAsStream("default-avatar.jpg")) {
+                
+            if (defaultImageStream != null) {
+                defaultImage = Thumbnails.of(defaultImageStream)
+                        .size(size, size)
+                        .crop(Positions.CENTER)
+                        .outputQuality(1.0)
+                        .asBufferedImage();
+            } else {
+                defaultImage = createColoredBackground(size, getRandomAvatarColor(userId));
+            }
+        } catch (Exception e) {
+            defaultImage = createColoredBackground(size, getRandomAvatarColor(userId));
+        }
+        
+        return applyColorTint(defaultImage, getRandomAvatarColor(userId));
+    }
+    
+    /**
+     * Aplica máscara hexagonal a la imagen.
+     * 
+     * @param image Imagen original
+     * @param size Tamaño de la máscara
+     * @return Imagen con máscara aplicada
+     * @throws IOException Si no se puede cargar la máscara
+     */
+    private static BufferedImage applyHexagonalMask(BufferedImage image, int size) throws IOException {
+        try (InputStream maskStream = UserAvatarGenerator.class
+                .getClassLoader()
+                .getResourceAsStream("images/hexMask.png")) {
+            
+            if (maskStream != null) {
+                BufferedImage mask = Thumbnails.of(ImageIO.read(maskStream))
+                        .size(size, size)
+                        .asBufferedImage();
+                return applyMask(image, mask);
+            }
+            return image;
+        }
+    }
+    
+    /**
+     * Crea una imagen de fondo plano con el color especificado.
+     * 
+     * @param size Tamaño de la imagen
+     * @param color Color de fondo
+     * @return Imagen generada
+     */
+    private static BufferedImage createColoredBackground(int size, Color color) {
         BufferedImage image = new BufferedImage(size, size, BufferedImage.TYPE_INT_RGB);
         Graphics2D g = image.createGraphics();
-        // Usar un color aleatorio de la lista en lugar de gris claro
-        g.setColor(getRandomAvatarColor(System.currentTimeMillis()));
+        g.setColor(color);
         g.fillRect(0, 0, size, size);
         g.dispose();
         return image;
     }
     
-        /**
-     * Obtiene un color aleatorio del array de colores predefinidos
-     * Para un mismo ID de usuario siempre devuelve el mismo color
+    /**
+     * Obtiene un color consistente para un ID de usuario dado.
      * 
-     * @param seed Semilla para generar el color (ID del usuario)
-     * @return Color aleatorio para el avatar
+     * @param userId ID del usuario
+     * @return Color de la paleta AVATAR_COLORS
      */
-    private static Color getRandomAvatarColor(long seed) {
-        // Asegúrate de que usuarios diferentes obtengan colores diferentes
-        // Hacemos un hash simple del ID para que la distribución sea mejor
-        int hashCode = Long.hashCode(seed);
-        int colorIndex = Math.abs(hashCode % AVATAR_COLORS.length);
+    private static Color getRandomAvatarColor(long userId) {
+        int colorIndex;
+	colorIndex = Math.abs(Long.hashCode(userId) % AVATAR_COLORS.length);
         return AVATAR_COLORS[colorIndex];
     }
     
     /**
-     * Aplica un tinte de color a la imagen
+     * Aplica un tinte de color a la imagen.
      * 
      * @param image Imagen original
-     * @param tintColor Color a aplicar como tinte
-     * @return Imagen con el tinte aplicado
+     * @param tintColor Color del tinte
+     * @return Imagen con tinte aplicado
      */
     private static BufferedImage applyColorTint(BufferedImage image, Color tintColor) {
-        int width = image.getWidth();
-        int height = image.getHeight();
-        BufferedImage tinted = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage tinted = new BufferedImage(
+            image.getWidth(), 
+            image.getHeight(), 
+            BufferedImage.TYPE_INT_ARGB);
         
         Graphics2D g2d = tinted.createGraphics();
         g2d.drawImage(image, 0, 0, null);
-        
-        // Aplicar tinte de color usando un composite de mezcla
-        g2d.setComposite(AlphaComposite.SrcAtop.derive(0.7f)); // 70% de intensidad del tinte
+        g2d.setComposite(AlphaComposite.SrcAtop.derive(0.7f));
         g2d.setColor(tintColor);
-        g2d.fillRect(0, 0, width, height);
+        g2d.fillRect(0, 0, image.getWidth(), image.getHeight());
         g2d.dispose();
         
         return tinted;
     }
     
     /**
-     * Aplica una máscara de transparencia a una imagen. Esta clase ha sido optimizada siguiendo instrucciones de ChatGPT
-     *
-     * @param image Imagen original a la que se aplicará la máscara.
-     * @param mask Imagen de la máscara que define las áreas visibles.
-     * @return Imagen con la máscara aplicada.
+     * Aplica una máscara de transparencia a la imagen.
+     * 
+     * @param image Imagen original
+     * @param mask Máscara a aplicar
+     * @return Imagen con máscara aplicada
      */
     private static BufferedImage applyMask(BufferedImage image, BufferedImage mask) {
-        int width = image.getWidth();
-        int height = image.getHeight();
-        // Crea una nueva imagen con canal alfa (transparencia)
-        BufferedImage maskedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2d = maskedImage.createGraphics();
-        // Dibuja la imagen original
+        BufferedImage result = new BufferedImage(
+            image.getWidth(), 
+            image.getHeight(), 
+            BufferedImage.TYPE_INT_ARGB);
+        
+        Graphics2D g2d = result.createGraphics();
         g2d.drawImage(image, 0, 0, null);
-        // Aplica la máscara con AlphaComposite
         g2d.setComposite(AlphaComposite.DstIn);
         g2d.drawImage(mask, 0, 0, null);
         g2d.dispose();
-        return maskedImage;
+        
+        return result;
     }
 }

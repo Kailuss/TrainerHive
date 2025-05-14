@@ -3,19 +3,36 @@ package oton.trainerhive.gui;
 import oton.trainerhive.gui.util.FontManager;
 
 /**
+ * Panel de inicio de sesión que se muestra dentro del frame principal. Este panel contiene los componentes visuales básicos para el inicio de sesión, como campos de texto y un botón, y se encarga de configurar su apariencia inicial. La lógica de autenticación reside en el diálogo de inicio de sesión ({@link LoginDialog}).
  *
- * @author Kailuss
+ * @author Alfonso Otón
+ * @version 1.2
+ * @since 2025
  */
 public class LoginPanel extends javax.swing.JPanel {
 
+    /**
+     * Referencia al frame principal de la aplicación. Necesario para interactuar con la ventana principal, aunque la lógica de inicio de sesión reside principalmente en {@link LoginDialog}.
+     */
     private final MainFrame principal;
 
+    // La variable loginButton no está declarada explícitamente fuera del bloque initComponents,
+    // pero se utiliza en setupUI. Asumo que está declarada dentro de initComponents
+    // y es un componente importante de la UI. Se añade Javadoc en la sección de variables.
+    /**
+     * Constructor del panel de inicio de sesión. Inicializa el panel y configura sus componentes y apariencia básica.
+     *
+     * @param principal La referencia al {@link MainFrame} principal.
+     */
     public LoginPanel(MainFrame principal) {
 	this.principal = principal;
 	initComponents();
 	setupUI();
     }
 
+    /**
+     * Configuración inicial de la interfaz de usuario del panel. Aplica fuentes a los componentes del panel.
+     */
     private void setupUI() {
 	FontManager.applyFontToContainer(this, 13f, 13f);
 	FontManager.applyFont(loginButton, "bold", 15);
@@ -123,12 +140,12 @@ public class LoginPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_buttonWebsiteActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-        LoginDialog jDialogLogin = new LoginDialog(principal, true);
-        jDialogLogin.setVisible(true);
+	LoginDialog jDialogLogin = new LoginDialog(principal, true);
+	jDialogLogin.setVisible(true);
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
-        // TODO add your handling code here:
+	// TODO add your handling code here:
     }//GEN-LAST:event_registerButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

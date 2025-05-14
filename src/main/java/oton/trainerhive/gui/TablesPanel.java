@@ -16,15 +16,37 @@ import oton.trainerhive.gui.util.FontManager;
 import oton.trainerhive.gui.util.UIConstants;
 
 /**
+ * Panel principal que contiene las tablas de alumnos, entrenamientos y ejercicios. Gestiona la interacción entre las tablas y la visualización jerárquica de datos.
+ *
+ * <p>
+ * Organización:</p>
+ * <ul>
+ * <li>Tabla izquierda: Lista de alumnos</li>
+ * <li>Tabla central: Entrenamientos del alumno seleccionado</li>
+ * <li>Tabla derecha: Ejercicios del entrenamiento seleccionado</li>
+ * </ul>
  *
  * @author Alfonso Otón
+ * @version 1.2
+ * @since 2025
  */
 public class TablesPanel extends javax.swing.JPanel {
 
+    /**
+     * Referencia al frame principal de la aplicación
+     */
     private final MainFrame principal;
+
+    /**
+     * Usuario actualmente seleccionado en la tabla
+     */
     private User selectedUser;
 
-    // Constructor.
+    /**
+     * Constructor del panel de tablas.
+     *
+     * @param principal Referencia al frame principal
+     */
     public TablesPanel(MainFrame principal) {
 	this.principal = principal;
 
@@ -33,7 +55,9 @@ public class TablesPanel extends javax.swing.JPanel {
 	updateUserInfo();
     }
 
-    // Configuración de los paneles y las tablas.
+    /**
+     * Configuración inicial de las tablas y paneles.
+     */
     private void setUpPanelTables() {
 	configureTablePanelBorders();
 	configureTableListeners();
@@ -42,11 +66,16 @@ public class TablesPanel extends javax.swing.JPanel {
 	setupUI();
     }
 
+    /**
+     * Aplica las fuentes a todos los componentes del panel.
+     */
     private void setupUI() {
 	FontManager.applyFontToContainer(this, 13f, 13f);
     }
 
-    // Bordes de los paneles.
+    /**
+     * Configura los bordes de los paneles de las tablas.
+     */
     private void configureTablePanelBorders() {
 	scrollPaneAlumnos.setBorder(BorderFactory.createEmptyBorder());
 	westPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, UIConstants.GRIS_OSCURO));
@@ -54,16 +83,24 @@ public class TablesPanel extends javax.swing.JPanel {
 	scrollPaneEjercicios.setBorder(BorderFactory.createEmptyBorder());
     }
 
-    // Ancho de columnas y márgenes de celda.
+    /**
+     * Establece los anchos de columna para todas las tablas.
+     */
     private void formatTableColumns() {
 	formatTable(tableAlumnos, UIConstants.COLUMN_WIDTH_ALUMNOS);
-	formatTable(tableEntrenamientos, UIConstants.COLUMN_WIDTH_ENTRENAMIENTOS_1, UIConstants.COLUMN_WIDTH_ENTRENAMIENTOS_2);
+	formatTable(tableEntrenamientos,
+		UIConstants.COLUMN_WIDTH_ENTRENAMIENTOS_1,
+		UIConstants.COLUMN_WIDTH_ENTRENAMIENTOS_2);
 	formatTable(tableEjercicios, UIConstants.COLUMN_WIDTH_EJERCICIOS);
     }
 
-    // Carga los alumnos y selecciona el primero.
+    /**
+     * Carga la tabla de alumnos con los usuarios asignados al instructor activo.
+     */
     private void loadAlumnosTable() {
-	tableAlumnos.setModel(new UsersTableModel(DataAccess.getAllUsersByInstructor(principal.getActiveUser().getId())));
+	tableAlumnos.setModel(new UsersTableModel(
+		DataAccess.getAllUsersByInstructor(principal.getActiveUser().getId())));
+
 	if (tableAlumnos.getRowCount() > 0) {
 	    tableAlumnos.getSelectionModel().setSelectionInterval(0, 0);
 	    tableAlumnos.requestFocus();
@@ -72,17 +109,23 @@ public class TablesPanel extends javax.swing.JPanel {
 	tableAlumnos.repaint();
     }
 
-    // Configura los listeners de las tablas.
+    /**
+     * Configura los listeners de selección para las tablas.
+     */
     private void configureTableListeners() {
 	setupAlumnosListener(tableAlumnos, tableEntrenamientos, tableEjercicios);
 	setupEntrenamientosListener(tableEntrenamientos, tableEjercicios);
     }
 
-    // ListSelectionListener de la tabla alumnos.
+    /**
+     * Configura el listener para la tabla de alumnos.
+     *
+     * @param alumnosTabla Tabla de alumnos
+     * @param entrenamientosTabla Tabla de entrenamientos
+     * @param ejerciciosTabla Tabla de ejercicios
+     */
     private void setupAlumnosListener(JTable alumnosTabla, JTable entrenamientosTabla, JTable ejerciciosTabla) {
 	alumnosTabla.getSelectionModel().addListSelectionListener((ListSelectionEvent event) -> {
-	    // Si la selección es válida, obtiene el alumno seleccionado,
-	    // actualiza la tabla de entrenamientos y limpia la tabla de ejercicios.
 	    if (isValidSelection(event, alumnosTabla)) {
 		selectedUser = getSelectedAlumno(alumnosTabla);
 		updateEntrenamientosTable(entrenamientosTabla, selectedUser);
@@ -91,16 +134,22 @@ public class TablesPanel extends javax.swing.JPanel {
 	});
     }
 
+    /**
+     * Actualiza la tabla de entrenamientos con el usuario actualmente seleccionado.
+     */
     public void updateEntrenamientosTable() {
 	updateEntrenamientosTable(tableEntrenamientos, selectedUser);
 	clearEjerciciosTable(tableEjercicios);
     }
 
-    // ListSelectionListener de la tabla entrenamientos.
+    /**
+     * Configura el listener para la tabla de entrenamientos.
+     *
+     * @param entrenamientosTabla Tabla de entrenamientos
+     * @param ejerciciosTabla Tabla de ejercicios
+     */
     private void setupEntrenamientosListener(JTable entrenamientosTabla, JTable ejerciciosTabla) {
 	entrenamientosTabla.getSelectionModel().addListSelectionListener(event -> {
-	    // Si la selección es válida, obtiene el entrenamiento seleccionado
-	    // y muestra los ejercicios correspondientes.
 	    if (isValidSelection(event, entrenamientosTabla)) {
 		Workout entrenamiento = getSelectedEntrenamiento(entrenamientosTabla);
 		mostrarEjerciciosDeEntrenamiento(ejerciciosTabla, entrenamiento);
@@ -108,47 +157,89 @@ public class TablesPanel extends javax.swing.JPanel {
 	});
     }
 
-    // Verifica que cambia la selección y que la fila seleccionada sea válida.
+    /**
+     * Verifica si una selección en una tabla es válida.
+     *
+     * @param event Evento de selección
+     * @param table Tabla donde ocurre la selección
+     * @return true si la selección es válida, false en caso contrario
+     */
     private boolean isValidSelection(ListSelectionEvent event, JTable table) {
 	return !event.getValueIsAdjusting() && table.getSelectedRow() >= 0;
     }
 
-    // Obtiene el modelo de la tabla de alumnos y devuelve el alumno de la fila seleccionada.
+    /**
+     * Obtiene el alumno seleccionado en la tabla.
+     *
+     * @param alumnosTabla Tabla de alumnos
+     * @return Usuario seleccionado
+     */
     private User getSelectedAlumno(JTable alumnosTabla) {
 	UsersTableModel model = (UsersTableModel) alumnosTabla.getModel();
 	return model.getUserAt(alumnosTabla.getSelectedRow());
     }
 
-    // Obtiene el modelo de la tabla de entrenamientos y devuelve el entrenamiento en la fila seleccionada.
+    /**
+     * Obtiene el entrenamiento seleccionado en la tabla.
+     *
+     * @param entrenamientosTabla Tabla de entrenamientos
+     * @return Entrenamiento seleccionado
+     */
     private Workout getSelectedEntrenamiento(JTable entrenamientosTabla) {
 	WorkoutsTableModel model = (WorkoutsTableModel) entrenamientosTabla.getModel();
 	return model.getEntrenamientoAt(entrenamientosTabla.getSelectedRow());
     }
 
-    // Limpia la tabla de ejercicios actualizándola con una lista vacía.
+    /**
+     * Limpia la tabla de ejercicios.
+     *
+     * @param ejerciciosTabla Tabla de ejercicios
+     */
     private void clearEjerciciosTable(JTable ejerciciosTabla) {
 	updateEjerciciosTable(ejerciciosTabla, new ArrayList<>());
     }
 
-    // Muestra los ejercicios asociados al entrenamiento seleccionado en la tabla de ejercicios.
+    /**
+     * Muestra los ejercicios de un entrenamiento en la tabla.
+     *
+     * @param ejerciciosTabla Tabla de ejercicios
+     * @param entrenamiento Entrenamiento seleccionado
+     */
     private void mostrarEjerciciosDeEntrenamiento(JTable ejerciciosTabla, Workout entrenamiento) {
 	updateEjerciciosTable(ejerciciosTabla, DataAccess.getExercicisPerWorkout(entrenamiento));
     }
 
-    // Actualiza el contenido de la tabla de entrenamientos.
+    /**
+     * Actualiza la tabla de entrenamientos con los datos de un usuario.
+     *
+     * @param entrenamientosTabla Tabla de entrenamientos
+     * @param alumnoSeleccionado Usuario seleccionado
+     */
     private void updateEntrenamientosTable(JTable entrenamientosTabla, User alumnoSeleccionado) {
 	ArrayList<Workout> entrenamientos = DataAccess.getWorkoutsPerUser(alumnoSeleccionado);
 	entrenamientosTabla.setModel(new WorkoutsTableModel(entrenamientos));
-	formatTable(entrenamientosTabla, UIConstants.COLUMN_WIDTH_ENTRENAMIENTOS_1, UIConstants.COLUMN_WIDTH_ENTRENAMIENTOS_2);
+	formatTable(entrenamientosTabla,
+		UIConstants.COLUMN_WIDTH_ENTRENAMIENTOS_1,
+		UIConstants.COLUMN_WIDTH_ENTRENAMIENTOS_2);
     }
 
-    // Actualiza el contenido de la tabla de ejercicios.
+    /**
+     * Actualiza la tabla de ejercicios con una lista de ejercicios.
+     *
+     * @param ejerciciosTabla Tabla de ejercicios
+     * @param ejercicios Lista de ejercicios a mostrar
+     */
     private void updateEjerciciosTable(JTable ejerciciosTabla, ArrayList<Exercise> ejercicios) {
 	ejerciciosTabla.setModel(new ExercisesTableModel(ejercicios));
 	formatTable(ejerciciosTabla, UIConstants.COLUMN_WIDTH_EJERCICIOS);
     }
 
-    // Configura las columnas de una tabla según el ancho especificado
+    /**
+     * Formatea las columnas de una tabla con los anchos especificados.
+     *
+     * @param table Tabla a formatear
+     * @param anchos Array de anchos para cada columna
+     */
     private void formatTable(JTable table, int... anchos) {
 	if (anchos.length != table.getColumnCount()) {
 	    System.err.println("Error: el número de anchos no coincide con el número de columnas de la tabla.");
@@ -160,17 +251,26 @@ public class TablesPanel extends javax.swing.JPanel {
 	}
     }
 
+    /**
+     * Actualiza la información del usuario en la interfaz.
+     */
     private void updateUserInfo() {
-	// Muestra el número de alumnos que tiene este instructor
 	labelUsersCount.setText(tableAlumnos.getRowCount() + " alumnos registrados.");
-	// Muestra el nombre e Email del instructor
 	labelActiveUser.setText(principal.getActiveUser().getName() + " (" + principal.getActiveUser().getEmail() + ")");
     }
 
+    /**
+     * Obtiene el usuario actualmente seleccionado.
+     *
+     * @return Usuario seleccionado o null si no hay selección
+     */
     public User getSelectedUser() {
 	return selectedUser;
     }
 
+    /**
+     * Realiza el logout del usuario actual.
+     */
     private void logOut() {
 	principal.logOut();
     }
@@ -574,7 +674,7 @@ public class TablesPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_buttonRemoveTaskActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+	// TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -10,14 +10,31 @@ import oton.trainerhive.gui.MainFrame.PanelType;
 import oton.trainerhive.gui.util.FontManager;
 
 /**
+ * Diálogo de inicio de sesión para la aplicación TrainerHive.
+ * Permite al usuario introducir sus credenciales (correo electrónico y contraseña)
+ * para acceder a la aplicación. Gestiona la validación de credenciales
+ * y la transición a la pantalla principal tras un inicio de sesión exitoso.
  *
  * @author Alfonso Otón
+ * @version 1.2
+ * @since 2025
  */
 public class LoginDialog extends javax.swing.JDialog {
 
+    /**
+     * Referencia al frame principal de la aplicación.
+     * Necesario para acceder a métodos y estados del frame principal,
+     * como establecer el usuario activo o cambiar de panel.
+     */
     private final MainFrame principal;
 
-    // Constructor del diálogo de inicio de sesión
+    /**
+     * Constructor del diálogo de inicio de sesión.
+     * Inicializa el diálogo y configura sus componentes y comportamiento.
+     *
+     * @param parent El {@code java.awt.Frame} padre del diálogo.
+     * @param modal Indica si el diálogo debe ser modal (bloquear la entrada a otras ventanas).
+     */
     public LoginDialog(java.awt.Frame parent, boolean modal) {
 	super(parent, modal);
 	principal = (MainFrame) parent;
@@ -25,7 +42,11 @@ public class LoginDialog extends javax.swing.JDialog {
 	setupUI();
     }
 
-    // Configuración inicial de la interfaz
+    /**
+     * Configuración inicial de la interfaz de usuario del diálogo.
+     * Aplica fuentes, configura el botón por defecto, centra el diálogo
+     * y añade listeners a los campos de texto y la casilla de verificación.
+     */
     private void setupUI() {
 	FontManager.applyFontToContainer(this, 13f, 13f);
 	FontManager.applyFont(loginButton, "bold", 13);
@@ -45,14 +66,14 @@ public class LoginDialog extends javax.swing.JDialog {
 	    @Override
 	    public void itemStateChanged(ItemEvent e) {
 		if (e.getStateChange() == ItemEvent.SELECTED) {
-		    passwordField.setEchoChar((char) 0);    // Muestra contraseña
+		    passwordField.setEchoChar((char) 0);	// Muestra contraseña
 		} else {
-		    passwordField.setEchoChar('•');	    // Oculta contraseña
+		    passwordField.setEchoChar('•');		// Oculta contraseña
 		}
 	    }
 	});
 
-	 // Simula un clic en el botón 'Iniciar sesión' al pulsar la tecla Intro
+	 // Simula un clic en el botón 'Iniciar sesión' al pulsar la tecla Intro en los campos de texto
 	userField.addKeyListener(new java.awt.event.KeyAdapter() {
 	    @Override
 	    public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -72,7 +93,13 @@ public class LoginDialog extends javax.swing.JDialog {
 	});
     }
 
-    // Método para gestionar el inicio de sesión
+    /**
+     * Gestiona las acciones a realizar tras un inicio de sesión exitoso.
+     * Establece el usuario activo en el frame principal, cambia al panel de tablas,
+     * notifica al frame principal que el inicio de sesión fue exitoso y cierra el diálogo.
+     *
+     * @param user El objeto {@link User} que representa al usuario que ha iniciado sesión.
+     */
     private void successfulLogin(User user) {
 	principal.setActiveUser(user);
 	principal.swapPanel(PanelType.TABLES);

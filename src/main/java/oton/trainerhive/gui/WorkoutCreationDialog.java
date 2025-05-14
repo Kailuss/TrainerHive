@@ -1,7 +1,6 @@
 package oton.trainerhive.gui;
 
 import java.awt.Component;
-import java.awt.Toolkit;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,23 +17,72 @@ import oton.trainerhive.dto.Workout;
 import oton.trainerhive.dto.User;
 import oton.trainerhive.gui.tablemodels.ExercisesSimpleTableModel;
 import oton.trainerhive.gui.util.FontManager;
-import oton.trainerhive.gui.util.SVGRenderer;
 
 /**
+ * Diálogo para la creación de nuevos entrenamientos. Permite seleccionar ejercicios, ordenarlos y configurar fechas y comentarios.
+ *
+ * <p>
+ * Funcionalidades principales:</p>
+ * <ul>
+ * <li>Selección de ejercicios desde un ComboBox</li>
+ * <li>Reordenamiento de ejercicios</li>
+ * <li>Validación de formato de fecha</li>
+ * <li>Creación del entrenamiento con todos los datos</li>
+ * </ul>
  *
  * @author Alfonso Otón
+ * @version 1.2
+ * @since 2025
  */
 public final class WorkoutCreationDialog extends javax.swing.JDialog {
 
+    /**
+     * Texto por defecto para el ComboBox de ejercicios
+     */
     private static final String DEFAULT_COMBOBOX_TEXT = "Añade un ejercicio";
+
+    /**
+     * Referencia al frame principal
+     */
     private final MainFrame principal;
+
+    /**
+     * Panel de tablas principal
+     */
     private final TablesPanel panelTables;
+
+    /**
+     * Lista de ejercicios añadidos al entrenamiento
+     */
     private final ArrayList<Exercise> addedExercises;
+
+    /**
+     * Lista completa de ejercicios disponibles
+     */
     private final ArrayList<Exercise> allExercises;
+
+    /**
+     * Ejercicio actualmente seleccionado en la tabla
+     */
     private Exercise selectedExercise;
+
+    /**
+     * Usuario seleccionado para el entrenamiento
+     */
     private final User selectedUser;
+
+    /**
+     * Objeto Workout que se está creando
+     */
     private final Workout newWorkout;
 
+    /**
+     * Constructor del diálogo de creación de entrenamiento.
+     *
+     * @param parent Frame padre
+     * @param modal Indica si el diálogo es modal
+     * @param selectedUser Usuario al que se asignará el entrenamiento
+     */
     public WorkoutCreationDialog(MainFrame parent, boolean modal, User selectedUser) {
 	super(parent, modal);
 	this.principal = parent;
@@ -50,30 +98,40 @@ public final class WorkoutCreationDialog extends javax.swing.JDialog {
 	initializeDialog();
     }
 
+    /**
+     * Inicializa el diálogo con la configuración básica.
+     */
     private void initializeDialog() {
 	setLocationRelativeTo(principal);
 	initComboBox();
 	initTable();
     }
 
-    // Configuración inicial del ComboBox
+    /**
+     * Configura el ComboBox de selección de ejercicios.
+     */
     private void initComboBox() {
 	setComboBoxRenderer();
 	setComboBoxListener();
 	updateAvailableExercises();
     }
 
-    // Configuración inicial de la Tabla
+    /**
+     * Configura la tabla de ejercicios añadidos.
+     */
     private void initTable() {
 	configureTableAppearance(tableExercises, scrollPaneExercises);
 	setTableListener(tableExercises);
     }
 
-    // Configura el renderizador para mostrar el texto por defecto en el ComboBox
+    /**
+     * Establece un renderizador personalizado para el ComboBox.
+     */
     private void setComboBoxRenderer() {
 	comboBoxExercises.setRenderer(new DefaultListCellRenderer() {
 	    @Override
-	    public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+	    public Component getListCellRendererComponent(JList<?> list, Object value,
+							  int index, boolean isSelected, boolean cellHasFocus) {
 		Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 		setText(value == null ? DEFAULT_COMBOBOX_TEXT : value.toString());
 		return c;
@@ -81,7 +139,9 @@ public final class WorkoutCreationDialog extends javax.swing.JDialog {
 	});
     }
 
-    // Listener de selección en el ComboBox
+    /**
+     * Configura el listener para la selección en el ComboBox.
+     */
     private void setComboBoxListener() {
 	comboBoxExercises.addActionListener(e -> {
 	    if (comboBoxExercises.getSelectedIndex() > 0) {
@@ -92,7 +152,11 @@ public final class WorkoutCreationDialog extends javax.swing.JDialog {
 	});
     }
 
-    // Listener de selección de filas en la tabla
+    /**
+     * Configura el listener para la selección en la tabla.
+     *
+     * @param exercisesTable Tabla de ejercicios
+     */
     private void setTableListener(JTable exercisesTable) {
 	exercisesTable.getSelectionModel().addListSelectionListener(event -> {
 	    if (isValidSelection(event, exercisesTable)) {
@@ -103,7 +167,9 @@ public final class WorkoutCreationDialog extends javax.swing.JDialog {
 	});
     }
 
-    // Actualiza los ejercicios disponibles en el ComboBox
+    /**
+     * Actualiza los ejercicios disponibles en el ComboBox.
+     */
     private void updateAvailableExercises() {
 	comboBoxExercises.removeAllItems();
 	comboBoxExercises.addItem(null);
@@ -115,12 +181,18 @@ public final class WorkoutCreationDialog extends javax.swing.JDialog {
 	comboBoxExercises.setEnabled(comboBoxExercises.getItemCount() > 1);
     }
 
-    // Agrega un ejercicio a la tabla
+    /**
+     * Añade un ejercicio a la tabla de ejercicios seleccionados.
+     *
+     * @param exercise Ejercicio a añadir
+     */
     private void addExerciseToTable(Exercise exercise) {
 	addedExercises.add(exercise);
     }
 
-    // Elimina el ejercicio seleccionado de la tabla
+    /**
+     * Elimina el ejercicio seleccionado de la tabla.
+     */
     private void removeSelectedExercise() {
 	if (selectedExercise != null) {
 	    addedExercises.remove(selectedExercise);
@@ -128,7 +200,9 @@ public final class WorkoutCreationDialog extends javax.swing.JDialog {
 	}
     }
 
-    // Mueve el ejercicio seleccionado hacia arriba en la lista
+    /**
+     * Mueve el ejercicio seleccionado hacia arriba en la lista.
+     */
     private void moveUpSelectedExercise() {
 	int index = addedExercises.indexOf(selectedExercise);
 	if (canMoveUp(index)) {
@@ -138,7 +212,9 @@ public final class WorkoutCreationDialog extends javax.swing.JDialog {
 	}
     }
 
-    // Mueve el ejercicio seleccionado hacia abajo en la lista
+    /**
+     * Mueve el ejercicio seleccionado hacia abajo en la lista.
+     */
     private void moveDownSelectedExercise() {
 	int index = addedExercises.indexOf(selectedExercise);
 	if (canMoveDown(index)) {
@@ -148,7 +224,9 @@ public final class WorkoutCreationDialog extends javax.swing.JDialog {
 	}
     }
 
-    // Actualiza la UI
+    /**
+     * Actualiza todos los componentes de la interfaz.
+     */
     private void refreshUI() {
 	updateExercisesTable();
 	updateAvailableExercises();
@@ -156,58 +234,118 @@ public final class WorkoutCreationDialog extends javax.swing.JDialog {
 	enableExerciseButtons(isRowSelected());
     }
 
+    /**
+     * Reinicia la selección del ComboBox.
+     */
     private void resetComboBox() {
 	comboBoxExercises.setSelectedIndex(0);
 	comboBoxExercises.hidePopup();
     }
 
+    /**
+     * Actualiza la tabla de ejercicios con la lista actual.
+     */
     private void updateExercisesTable() {
 	tableExercises.setModel(new ExercisesSimpleTableModel(addedExercises));
 	tableExercises.revalidate();
 	tableExercises.repaint();
     }
 
+    /**
+     * Configura el aspecto visual de una tabla.
+     *
+     * @param table Tabla a configurar
+     * @param pane ScrollPane que contiene la tabla
+     */
     private void configureTableAppearance(JTable table, JScrollPane pane) {
 	pane.setColumnHeaderView(null);
 	table.getColumnModel().getColumn(0).setCellRenderer(principal.getCellRenderer());
     }
 
+    /**
+     * Verifica si una selección en la tabla es válida.
+     *
+     * @param event Evento de selección
+     * @param table Tabla donde ocurre la selección
+     * @return true si la selección es válida
+     */
     private boolean isValidSelection(ListSelectionEvent event, JTable table) {
 	return !event.getValueIsAdjusting() && table.getSelectedRow() >= 0;
     }
 
+    /**
+     * Obtiene el ejercicio seleccionado en la tabla.
+     *
+     * @param table Tabla de ejercicios
+     * @return Ejercicio seleccionado
+     */
     private Exercise getSelectedExercise(JTable table) {
 	return ((ExercisesSimpleTableModel) table.getModel()).getExerciseAt(table.getSelectedRow());
     }
 
+    /**
+     * Verifica si hay una fila seleccionada en la tabla.
+     *
+     * @return true si hay una fila seleccionada
+     */
     private boolean isRowSelected() {
 	return tableExercises.getSelectedRow() != -1;
     }
 
+    /**
+     * Habilita o deshabilita los botones de gestión de ejercicios.
+     *
+     * @param enable true para habilitar, false para deshabilitar
+     */
     private void enableExerciseButtons(boolean enable) {
 	buttonRemoveExercise.setEnabled(enable);
 	buttonMoveUp.setEnabled(enable);
 	buttonMoveDown.setEnabled(enable);
     }
 
+    /**
+     * Actualiza el estado de los botones de movimiento según la posición del ejercicio.
+     */
     private void updateMoveButtonState() {
 	int index = addedExercises.indexOf(selectedExercise);
 	buttonMoveUp.setEnabled(canMoveUp(index));
 	buttonMoveDown.setEnabled(canMoveDown(index));
     }
 
+    /**
+     * Verifica si un ejercicio puede moverse hacia arriba.
+     *
+     * @param index Índice actual del ejercicio
+     * @return true si se puede mover hacia arriba
+     */
     private boolean canMoveUp(int index) {
 	return index > 0;
     }
 
+    /**
+     * Verifica si un ejercicio puede moverse hacia abajo.
+     *
+     * @param index Índice actual del ejercicio
+     * @return true si se puede mover hacia abajo
+     */
     private boolean canMoveDown(int index) {
 	return index < addedExercises.size() - 1;
     }
 
+    /**
+     * Selecciona una fila específica en la tabla.
+     *
+     * @param index Índice de la fila a seleccionar
+     */
     private void selectTableRow(int index) {
 	tableExercises.getSelectionModel().setSelectionInterval(index, index);
     }
 
+    /**
+     * Valida que el formulario esté completo y correcto.
+     *
+     * @return true si el formulario es válido
+     */
     private boolean checkForm() {
 	return !(!isValidDateFormat()
 		|| textFieldWorkoutComments.getText().trim().isEmpty()
@@ -215,6 +353,11 @@ public final class WorkoutCreationDialog extends javax.swing.JDialog {
 		|| addedExercises.isEmpty());
     }
 
+    /**
+     * Verifica que la fecha tenga el formato correcto.
+     *
+     * @return true si la fecha es válida
+     */
     private boolean isValidDateFormat() {
 	try {
 	    AbstractFormatter formatter = formattedTextFieldDate.getFormatter();
@@ -226,6 +369,11 @@ public final class WorkoutCreationDialog extends javax.swing.JDialog {
 	}
     }
 
+    /**
+     * Construye el objeto Workout con los datos del formulario.
+     *
+     * @return Objeto Workout configurado
+     */
     private Workout getNewWorkout() {
 	newWorkout.setComments(textFieldWorkoutComments.getText());
 	newWorkout.setForDate(formattedTextFieldDate.getText());
@@ -233,13 +381,15 @@ public final class WorkoutCreationDialog extends javax.swing.JDialog {
 	return newWorkout;
     }
 
-    // Muestra un cuadro de mensaje indicando que el formulario no se ha completado correctamente
+    /**
+     * Muestra un mensaje de error cuando el formulario no está completo.
+     */
     public void showFormError() {
 	JOptionPane.showMessageDialog(
 		this,
-		"Por favor, rellene todos los campos correctamente.", // Mensaje
-		"Error en el formulario", // Título
-		JOptionPane.WARNING_MESSAGE // Tipo de mensaje
+		"Por favor, rellene todos los campos correctamente.",
+		"Error en el formulario",
+		JOptionPane.WARNING_MESSAGE
 	);
     }
 
